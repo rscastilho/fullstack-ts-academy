@@ -23,11 +23,11 @@ class app {
     this.app.use(morgan('dev'));
     this.app.use(helmet());
     this.app.use((error: Error, req: Request, res: Response, next: NextFunction) => {
-      console.log('erro aqui no middleware', Error);
-      res.status(500).send(error.message);
+      console.log('Erro registrado no middleware - express async errors', Error);
+      res.status(500).json(error.message);
     });
   }
-  
+
   private routs() {
     this.app.use(routers);
   }

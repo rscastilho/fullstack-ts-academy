@@ -12,10 +12,11 @@ class login {
       const userByEmail = await _userRepository.userByEmail(req.body.email);
       connection().query(userByEmail.query, userByEmail.fields, (err, data: RowDataPacket[]) => {
         err && res.json(err);
+
         if (data.length) {
-          _testPassword.comparePassword(req.body.senha, data[0]['senha'], req.body.email, data[0]['id']).then((validaSenha: any) => {
+          _testPassword.comparePassword(req.body.senha, data[0]['senha'], req.body.email, data[0]['id']).then((validaSenha) => {
             if (!validaSenha.message.includes('Login realizado com sucesso!')) {
-              return res.status(validaSenha.status).json({ message: validaSenha.message });
+              return res.status(validaSenha.statusCode).json({ message: validaSenha.message });
             } else {
               _tokenJwt.createTokenJwt(data[0]['id'], req.body.email).then((token) => {
                 return res.status(202).json({ message: `Bem vindo ${req.body.email}. Login realizado com sucesso!`, email: req.body.email, token: token });
@@ -24,7 +25,7 @@ class login {
           });
           return;
         } else {
-          res.status(401).json({ message: `e-mail ${req.body.email} não cadastrado no sistema`});
+          res.status(401).json({ message: `e-mail ${req.body.email} não cadastrado no sistema` });
           return;
         }
       });

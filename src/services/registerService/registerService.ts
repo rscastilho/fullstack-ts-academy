@@ -8,6 +8,11 @@ import utils from '../../application/util/utils';
 import _rashPassword from '../../application/util/passwordHash';
 
 class registerService {
+  constructor(){
+    this.addUser
+  }
+
+
   async addUser(req: Request, res: Response) {
     try {
       const dados: user = req.body;
@@ -45,7 +50,7 @@ class registerService {
         } else {
           _userRepository.userById(data.insertId).then((result) => {
             const id = data.insertId;
-            connection().query(result.query, result.fields, (err, data: RowDataPacket[]) => {
+            connection().query(result.query, result.fields, (err, data:RowDataPacket[]) => {
               err && console.log(err);
               res.status(201).json({
                 message: `Usuario ${data[0]['nomeCompleto'].toUpperCase()} -  Matrícula: ${data[0]['numeroMatricula']} cadastrado com sucesso!`,

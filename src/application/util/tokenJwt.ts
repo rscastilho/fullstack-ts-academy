@@ -1,7 +1,9 @@
 import dotenv from 'dotenv';
 dotenv.config();
 import jwt from 'jsonwebtoken';
-const jwtSecret: any = process.env.JWT_SECRET;
+const jwtSecret:any = process.env.JWT_SECRET;
+
+
 
 class tokenJwt {
   async createTokenJwt(id: number, email: string) {

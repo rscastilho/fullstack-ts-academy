@@ -1,0 +1,4 @@
+database: mydbonline
+username: tj2xbswqtczta25wf4gi
+host: us-east.connect.psdb.cloud
+password: pscale_pw_C9ECO9rDmxsoAPmo6W7OwFyEcbRMEIiFb41nx82LKVW

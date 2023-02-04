@@ -4,7 +4,7 @@ class loginQueries {
   }
 
   errorPasswordByUserEmail(email: string) {
-    const query = `SELECT id, senhaErros, blocked, senhaExpiraEm FROM user WHERE ?? = ?`;
+    const query = `SELECT id, senhaErros, blocked, senhaExpiraEm FROM mydbonline.user WHERE ?? = ?`;
     const fields: string[] = ['email', email];
     return { query, fields };
   }

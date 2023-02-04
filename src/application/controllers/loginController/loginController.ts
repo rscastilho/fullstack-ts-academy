@@ -15,6 +15,7 @@ class loginController {
 
   private async login() {
     return this.router.post('/', _loginValidator.userLoginValidator(), _validation, loginService);
+    
   }
 
   private logout() {

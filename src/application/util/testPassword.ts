@@ -3,9 +3,10 @@ import { connection } from './../../data/dbConnect';
 import { RowDataPacket } from 'mysql2';
 import _loginRepository from '../../repository/loginRepository/loginRepository';
 import _userRepository from '../../repository/userRepository/userRepository';
+import { retorno } from '../../interfaces/retornoValidaSenha';
 
 class testPassword {
-  async comparePassword(senhaInformada: string, senhaValidar: string, email: string, id: number) {
+  async comparePassword(senhaInformada: string, senhaValidar: string, email: string, id: number): Promise<retorno> {
     try {
       const result = bcrypt.compareSync(senhaInformada, senhaValidar);
       //se a senha estiver incorreta entra no if
@@ -18,12 +19,12 @@ class testPassword {
         const passwordIsExpired: Date = pegarQuantidadeErros.map((x) => x[0].senhaExpiraEm)[0];
         //se a senha estiver errada e expirada, para por aqui se nao verificar que esta bloqueado e inclui um erro
         if (passwordIsExpired < new Date()) {
-          return { message: `Sua senha expirou em ${passwordIsExpired.toLocaleDateString()}`, status: 401 };
+          return { message: `Sua senha expirou em ${passwordIsExpired.toLocaleDateString()}`, statusCode: 401 };
         } else if (quantidadeErros === 5 || isBlocked > 0) {
           const bloqueiaUsuarioQuery = await _userRepository.blockUser(true, new Date(), id);
           const bloqueiaUsuario = await connection().promise().query(bloqueiaUsuarioQuery.query, bloqueiaUsuarioQuery.fields);
           if (bloqueiaUsuario[0].affectedRows > 0) {
-            return { message: 'Usuário bloqueado. Contate o administrador do sistema', status: 401 };
+            return { message: 'Usuário bloqueado. Contate o administrador do sistema', statusCode: 401 };
           }
         } else {
           let addQtdErro = quantidadeErros + 1;
@@ -34,7 +35,7 @@ class testPassword {
             message: `Senha incorreta. Você errou sua senha ${addQtdErro} vez(es). ${
               5 - addQtdErro >= 1 ? 'Você tem mais ' + (5 - addQtdErro) + ' tentativas.' : 'Se errar mais uma vez será bloqueado'
             }`,
-            status: 401,
+            statusCode: 401,
           };
         }
       }
@@ -43,16 +44,16 @@ class testPassword {
       const pegarQuantidadeErros: RowDataPacket[] = await connection().promise().query(pegarUser.query, pegarUser.fields);
       const passwordIsExpired: Date = pegarQuantidadeErros.map((x) => x[0].senhaExpiraEm)[0];
       if (passwordIsExpired < new Date()) {
-        return { message: `Sua senha expirou em ${passwordIsExpired.toLocaleDateString()}`, status: 401 };
+        return { message: `Sua senha expirou em ${passwordIsExpired.toLocaleDateString()}`, statusCode: 401 };
       }
 
       //tudo certo retorna ok para seguir com o login
       const addErroQuery = await _userRepository.addErrors(0, id);
       await connection().promise().query(addErroQuery.query, addErroQuery.fields);
-      return { message: 'Login realizado com sucesso!', status: 200 };
-    } catch (error) {
+      return { message: 'Login realizado com sucesso!', statusCode: 200 };
+    } catch (error: any) {
       console.log(error);
-      return { message: error, status: 404 };
+      return { message: error.message, statusCode: 404 };
     }
   }
 }
