@@ -13,6 +13,25 @@ class userQueries {
     return { query, fields };
   }
 
+  async userByCpf(cpf: string) {
+    const query = `SELECT cpf FROM mydbonline.user where ?? = ?`;
+    const fields: string[] = ['cpf', cpf];
+    return { query, fields };
+  }
+
+  async userByNumeroMatricula(numeroMatricula: number) {
+    const query = `SELECT numeroMatricula FROM mydbonline.user where ?? = ?`;
+    const fields: [string, number] = ['numeoMatricula', numeroMatricula];
+    return { query, fields };
+  }
+
+  async isUserExists(numeroMatricula: number, email: string, cpf: string) {
+    const query = `SELECT id, email, cpf, numeroMatricula FROM mydbonline.user where ?? = ? or ??=? or ??=?`;
+    //tipar array com numeros e letras
+    const fields: (string | number)[] = ['numeoMatricula', numeroMatricula, 'email', email, 'cpf', cpf];
+    return { query, fields };
+  }
+
   async addErrors(quantidadeErros: number, id: number) {
     const query = `update mydbonline.user set ??= ? WHERE ?? = ?`;
     const fields: (string | number)[] = ['senhaErros', quantidadeErros, 'id', id];

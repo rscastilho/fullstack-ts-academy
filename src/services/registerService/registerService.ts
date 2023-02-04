@@ -13,10 +13,9 @@ class registerService {
   }
 
 
-  async addUser(req: Request, res: Response) {
+  async addUser(req: Request, res: Response)  {
     try {
       const dados: user = req.body;
-
       dados.createAt = utils.hoje();
       //incluir quantidade de dias para expirar a senha
       dados.senhaExpiraEm = utils.addDias(60);
@@ -64,7 +63,7 @@ class registerService {
     } catch (error) {
       console.log(error);
       res.json(error);
-      return;
+       return error;
     }
   }
 }
