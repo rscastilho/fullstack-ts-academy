@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { connection } from './../../data/dbConnect';
-import { ResultSetHeader, RowDataPacket } from 'mysql2';
+import { ErrorPacketParams, ResultSetHeader, RowDataPacket } from 'mysql2';
 import { user } from './../../interfaces/user';
 import _registerRepository from '../../repository/registerRepository/registerRepository';
 import _userRepository from '../../repository/userRepository/userRepository';
@@ -8,12 +8,11 @@ import utils from '../../application/util/utils';
 import _rashPassword from '../../application/util/passwordHash';
 
 class registerService {
-  constructor(){
-    this.addUser
+  constructor() {
+    this.addUser;
   }
 
-
-  async addUser(req: Request, res: Response)  {
+  async addUser(req: Request, res: Response) {
     try {
       const dados: user = req.body;
       dados.createAt = utils.hoje();
@@ -42,14 +41,19 @@ class registerService {
         dados.createAt,
         dados.senhaExpiraEm
       );
+
       connection().query(result.query, result.fields, (err, data: ResultSetHeader) => {
         err && console.log(err);
         if (data === undefined) {
+          if (err?.message.includes('AlreadyExists')) {
+            return res.json({
+              message: `Usuário já cadastrado. Verifique o ${err.message.substring(err.message.indexOf('user.') + 5, err.message.indexOf('_UNIQUE'))} informado.`,
+            });
+          }
           return res.json({ message: 'Erro ao cadastrar usuário', error: err?.message });
         } else {
           _userRepository.userById(data.insertId).then((result) => {
-            const id = data.insertId;
-            connection().query(result.query, result.fields, (err, data:RowDataPacket[]) => {
+            connection().query(result.query, result.fields, (err, data: RowDataPacket[]) => {
               err && console.log(err);
               res.status(201).json({
                 message: `Usuario ${data[0]['nomeCompleto'].toUpperCase()} -  Matrícula: ${data[0]['numeroMatricula']} cadastrado com sucesso!`,
@@ -63,7 +67,7 @@ class registerService {
     } catch (error) {
       console.log(error);
       res.json(error);
-       return error;
+      return error;
     }
   }
 }

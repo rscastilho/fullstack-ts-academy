@@ -4,19 +4,19 @@ class userRegisterValidation {
   userRegisterValidator() {
     return [
       body('numeroMatricula').isNumeric().withMessage('Campo número matricula é de preenchimento obrigatório'),
-      body('email').isEmail().withMessage('Digite um email com formato válido').isLength({ min: 10, max: 65 }).withMessage('Quantidade de caracteres incompativel'),
+      body('email').isEmail().withMessage('Digite um email com formato válido').isLength({ min: 10, max: 65 }).withMessage('email com quantidade de caracteres incompativel'),
       body('nomeCompleto')
         .isString()
         .withMessage('Campo nome completo é de preenchimento obrigatório')
         .isLength({ min: 5, max: 70 })
         .withMessage('Quantidade de caracteres incompativel'),
-      body('cpf').isString().withMessage('Campo cpf é de preenchimento obrigatório').isLength({ min: 11, max: 15 }).withMessage('Quantidade de caracteres incompativel'),
+      body('cpf').isString().withMessage('Campo cpf é de preenchimento obrigatório').isLength({ min: 11, max: 15 }).withMessage('cpf com quantidade de caracteres incompativel'),
       body('dataNascimento')
         .isString()
         .withMessage('Campo data nascimento é de preenchimento obrigatório')
         .isLength({ min: 8, max: 25 })
         .withMessage('Quantidade de caracteres incompativel'),
-      body('telefone').isString().withMessage('Campo telefone é de preenchimento obrigatório').isLength({ min: 8, max: 25 }).withMessage('Quantidade de caracteres incompativel'),
+      body('telefone').isString().withMessage('Campo telefone é de preenchimento obrigatório').isLength({ min: 8, max: 25 }).withMessage('telefone com quantidade de caracteres incompativel'),
       body('senha')
         .notEmpty()
         .withMessage('A senha não pode ser vazia')

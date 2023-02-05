@@ -28,7 +28,7 @@ class userQueries {
   async isUserExists(numeroMatricula: number, email: string, cpf: string) {
     const query = `SELECT id, email, cpf, numeroMatricula FROM mydbonline.user where ?? = ? or ??=? or ??=?`;
     //tipar array com numeros e letras
-    const fields: (string | number)[] = ['numeoMatricula', numeroMatricula, 'email', email, 'cpf', cpf];
+    const fields: (string | number)[] = ['numeroMatricula', numeroMatricula, 'email', email, 'cpf', cpf];
     return { query, fields };
   }
 

@@ -16,6 +16,10 @@ class userRepository {
   async blockUser(blocked: boolean, blockedAt: Date, id: number) {
     return await _userQuery.blockUser(blocked, blockedAt, id);
   }
+
+  async isUserExists(numeroMatricula: number, email: string, cpf: string) {
+    return await _userQuery.isUserExists(numeroMatricula, email, cpf);
+  }
 }
 
 export default new userRepository();
