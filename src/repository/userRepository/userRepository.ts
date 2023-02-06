@@ -20,6 +20,10 @@ class userRepository {
   async isUserExists(numeroMatricula: number, email: string, cpf: string) {
     return await _userQuery.isUserExists(numeroMatricula, email, cpf);
   }
+
+  async addAvatar(id: number, avatar: string) {
+    return await _userQuery.addAvatar(id, avatar);
+  }
 }
 
 export default new userRepository();

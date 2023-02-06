@@ -43,6 +43,12 @@ class userQueries {
     const fields: (string | boolean | Date | number)[] = ['blocked', blocked, 'blockedAt', blockedAt, 'id', id];
     return { query, fields };
   }
+
+  async addAvatar(id: number, avatar: string) {
+    const query = `UPDATE mydbonline.user  SET ??=? WHERE ??=?`;
+    const fields: (number | string)[] = ['avatar', avatar, 'id', id];
+    return { query, fields };
+  }
 }
 
 export default new userQueries();
