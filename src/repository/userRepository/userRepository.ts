@@ -24,6 +24,10 @@ class userRepository {
   async addAvatar(id: number, avatar: string) {
     return await _userQuery.addAvatar(id, avatar);
   }
+
+  async pickAvatar(id: number) {
+    return await _userQuery.pickAvatar(id);
+  }
 }
 
 export default new userRepository();

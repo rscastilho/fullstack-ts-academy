@@ -13,6 +13,8 @@ import mysql from 'mysql2';
 //   });
 //   return con;
 // }
+
+
 export const connection = () => {
   const con = mysql.createPool({
     host: 'us-east.connect.psdb.cloud',
@@ -27,8 +29,6 @@ export const connection = () => {
   });
   return con;
 };
-
-require('dotenv').config();
 
 // const connection = mysql.createConnection(process.env.DATABASE_URL)
 // console.log('Connected to PlanetScale!')

@@ -49,6 +49,12 @@ class userQueries {
     const fields: (number | string)[] = ['avatar', avatar, 'id', id];
     return { query, fields };
   }
+
+  async pickAvatar(id: number) {
+    const query = `SELECT avatar FROM mydbonline.user WHERE ?? = ?`;
+    const fields = ['id', id];
+    return { query, fields };
+  }
 }
 
 export default new userQueries();

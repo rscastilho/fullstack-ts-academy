@@ -1,6 +1,7 @@
 import express, { Application } from 'express';
 import _userService from '../../../services/userService/userService';
 import { imageUpload } from '../../util/filesUpload';
+import { avatarExists } from '../../util/avatarExists';
 
 class userController {
   router = express.Router();
