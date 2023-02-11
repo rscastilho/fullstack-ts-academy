@@ -17,6 +17,10 @@ class userRepository {
     return await _userQuery.blockUser(blocked, blockedAt, id);
   }
 
+  async unblockUser(blocked: boolean, blockedAt: Date, id: number) {
+    return await _userQuery.unblockUser(blocked, blockedAt, id);
+  }
+
   async isUserExists(numeroMatricula: number, email: string, cpf: string) {
     return await _userQuery.isUserExists(numeroMatricula, email, cpf);
   }
@@ -27,6 +31,13 @@ class userRepository {
 
   async pickAvatar(id: number) {
     return await _userQuery.pickAvatar(id);
+  }
+
+  async deleteUser(deleted: boolean, deletedAt: Date, id: number) {
+    return await _userQuery.deleteUser(deleted, deletedAt, id);
+  }
+  async restoreUser(deleted: boolean, deletedAt: Date, id: number) {
+    return await _userQuery.restoreUser(deleted, deletedAt, id);
   }
 }
 

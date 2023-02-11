@@ -8,7 +8,7 @@ class userQueries {
   }
 
   async userByEmail(email: string) {
-    const query = `SELECT id, email, senha FROM mydbonline.user where ?? = ?`;
+    const query = `SELECT id, email, blocked, deleted, senhaExpirar, senha FROM mydbonline.user where ?? = ?`;
     const fields: string[] = ['email', email];
     return { query, fields };
   }
@@ -44,6 +44,12 @@ class userQueries {
     return { query, fields };
   }
 
+  async unblockUser(blocked: boolean, blockedAt: Date, id: number) {
+    const query = `UPDATE mydbonline.user  SET ??=?, ??=? WHERE ??=?`;
+    const fields: (string | boolean | Date | number)[] = ['blocked', blocked, 'blockedAt', blockedAt, 'id', id];
+    return { query, fields };
+  }
+
   async addAvatar(id: number, avatar: string) {
     const query = `UPDATE mydbonline.user  SET ??=? WHERE ??=?`;
     const fields: (number | string)[] = ['avatar', avatar, 'id', id];
@@ -53,6 +59,17 @@ class userQueries {
   async pickAvatar(id: number) {
     const query = `SELECT avatar FROM mydbonline.user WHERE ?? = ?`;
     const fields = ['id', id];
+    return { query, fields };
+  }
+
+  async deleteUser(deleted: boolean, deletedAt: Date, id: number) {
+    const query = `UPDATE mydbonline.user  SET ??=?, ??=? WHERE ??=?`;
+    const fields: (string | boolean | Date | number)[] = ['deleted', deleted, 'deletedAt', deletedAt, 'id', id];
+    return { query, fields };
+  }
+  async restoreUser(deleted: boolean, deletedAt: Date, id: number) {
+    const query = `UPDATE mydbonline.user  SET ??=?, ??=? WHERE ??=?`;
+    const fields: (string | boolean | Date | number)[] = ['deleted', deleted, 'deletedAt', deletedAt, 'id', id];
     return { query, fields };
   }
 }

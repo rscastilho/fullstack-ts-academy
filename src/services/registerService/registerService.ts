@@ -47,6 +47,7 @@ class registerService {
         if (data === undefined) {
           if (err?.message.includes('AlreadyExists')) {
             return res.json({
+              //pega o campo informado no erro do mysql
               message: `Usuário já cadastrado. Verifique o ${err.message.substring(err.message.indexOf('user.') + 5, err.message.indexOf('_UNIQUE'))} informado.`,
             });
           }
