@@ -117,6 +117,10 @@ class userQueries {
     ];
     return { query, fields };
   }
+  async getAllUser() {
+    const query = `SELECT id, numeroMatricula, nomeCompleto, email, cpf, dataNascimento, telefone, avatar, cep, endereco, complemento, bairro, cidade, uf FROM mydbonline.user`;
+    return { query };
+  }
 }
 
 export default new userQueries();

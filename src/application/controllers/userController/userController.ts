@@ -17,6 +17,7 @@ class userController {
     this.router.patch('/restoreuser/:id', _userService.restoreUser);
     this.router.patch('/unblockuser/:id', _userService.unblockUser);
     this.router.patch('/updateuser/:id', userUpdateValidation.userLoginValidator(), validation, _userService.updateUser);
+    this.router.get('/', _userService.getallUser);
   }
 }
 

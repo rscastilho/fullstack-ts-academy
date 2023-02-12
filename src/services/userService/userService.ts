@@ -139,6 +139,20 @@ class userService {
       return res.send(error);
     }
   }
+
+  async getallUser(req: Request, res: Response) {
+    try {
+      const getAllUserQuery = await _userRepository.getAllUser();
+      const getAllUser = await connection().promise().query(getAllUserQuery.query);
+      if (getAllUser[0].length < 1) {
+        return res.status(400).json({ resultados: getAllUser[0].length, message: 'Nenhum usuário encontrato' });
+      } else {
+        return res.status(200).json({ resultados: getAllUser[0].length, data: getAllUser[0] });
+      }
+    } catch (error) {
+      return error;
+    }
+  }
 }
 
 export default new userService();

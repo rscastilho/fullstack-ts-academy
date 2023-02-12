@@ -55,6 +55,10 @@ class userRepository {
   ) {
     return await _userQuery.updateUser(nomeCompleto, email, dataNascimento, telefone, cep, endereco, complemento, bairro, cidade, uf, updateAt, id);
   }
+
+  async getAllUser() {
+    return await _userQuery.getAllUser();
+  }
 }
 
 export default new userRepository();
