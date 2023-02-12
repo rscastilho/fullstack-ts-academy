@@ -2,7 +2,7 @@ import { user } from '../../interfaces/user';
 
 class userQueries {
   async userById(id: number) {
-    const query = `SELECT id, numeroMatricula, nomeCompleto, email, cpf FROM mydbonline.user WHERE ?? = ?`;
+    const query = `SELECT id, numeroMatricula, nomeCompleto, email, deleted, cpf FROM mydbonline.user WHERE ?? = ?`;
     const fields: [string, number] = ['id', id];
     return { query, fields };
   }

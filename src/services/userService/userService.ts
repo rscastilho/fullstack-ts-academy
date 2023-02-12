@@ -36,6 +36,7 @@ class userService {
   }
 
   async deleteUser(req: Request, res: Response): Promise<Response> {
+    //funcao deleta e restaura usuario
     try {
       const { id } = req.params;
       const pegarUserQuery = await _userRepository.userById(+id);
@@ -43,22 +44,34 @@ class userService {
       if (!pegarUser[0].length) {
         return res.status(404).json({ message: 'Usuário não cadastrado' });
       }
-      const deleted: boolean = true;
-      const deletedAt: Date = new Date();
 
-      const deleteUserQuery = await _userRepository.deleteUser(deleted, deletedAt, +id);
-      const deleteUser: RowDataPacket[] = await connection().promise().query(deleteUserQuery.query, deleteUserQuery.fields);
-      if (deleteUser[0]['affectedRows'] > 0) {
-        return res.status(200).json({ message: 'Usuario deletado com sucesso!' });
+      const deleted = !pegarUser[0][0]['deleted'];
+      const deletedAt: Date = new Date();
+      if (!deleted) {
+        const deleteUserQuery = await _userRepository.deleteUser(deleted, deletedAt, +id);
+        const deleteUser: RowDataPacket[] = await connection().promise().query(deleteUserQuery.query, deleteUserQuery.fields);
+        if (deleteUser[0]['affectedRows'] > 0) {
+          return res.status(200).json({ message: 'Usuário restaurado com sucesso!' });
+        } else {
+          return res.status(400).json({ message: 'Erro ao restaurar usuário.' });
+        }
       } else {
-        return res.status(400).json({ message: 'Erro ao deletar usuario.' });
+        const deleteUserQuery = await _userRepository.deleteUser(deleted, deletedAt, +id);
+        const deleteUser: RowDataPacket[] = await connection().promise().query(deleteUserQuery.query, deleteUserQuery.fields);
+        if (deleteUser[0]['affectedRows'] > 0) {
+          return res.status(200).json({ message: 'Usuario deletado com sucesso!' });
+        } else {
+          return res.status(400).json({ message: 'Erro ao deletar usuario.' });
+        }
       }
+ 
     } catch (error) {
       return res.json(error);
     }
   }
 
-  async restoreUser(req: Request, res: Response): Promise<Response | Error> {
+  async restoreUser(req: Request, res: Response): Promise<Error | Response> {
+    //funcao somente restaura usuario
     try {
       const { id } = req.params;
       const pegarUserQuery = await _userRepository.userById(+id);
@@ -76,8 +89,8 @@ class userService {
       } else {
         return res.status(400).json({ message: 'Erro ao restaurar usuário.' });
       }
-    } catch (error) {
-      return res;
+    } catch (error: any) {
+      return error.message;
     }
   }
 
