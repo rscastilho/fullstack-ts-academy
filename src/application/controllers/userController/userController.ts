@@ -1,6 +1,8 @@
 import express from 'express';
 import _userService from '../../../services/userService/userService';
 import { imageUpload } from '../../util/filesUpload';
+import userUpdateValidation from '../../util/validation/userUpdateValidation';
+import validation from '../../util/validation/validation';
 
 class userController {
   router = express.Router();
@@ -14,6 +16,7 @@ class userController {
     this.router.patch('/deleteuser/:id', _userService.deleteUser);
     this.router.patch('/restoreuser/:id', _userService.restoreUser);
     this.router.patch('/unblockuser/:id', _userService.unblockUser);
+    this.router.patch('/updateuser/:id', userUpdateValidation.userLoginValidator(), validation, _userService.updateUser);
   }
 }
 

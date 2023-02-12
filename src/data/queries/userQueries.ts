@@ -2,7 +2,7 @@ import { user } from '../../interfaces/user';
 
 class userQueries {
   async userById(id: number) {
-    const query = `SELECT id, numeroMatricula, nomeCompleto, email, deleted, cpf FROM mydbonline.user WHERE ?? = ?`;
+    const query = `SELECT * FROM mydbonline.user WHERE ?? = ?`;
     const fields: [string, number] = ['id', id];
     return { query, fields };
   }
@@ -70,6 +70,51 @@ class userQueries {
   async restoreUser(deleted: boolean, deletedAt: Date, id: number) {
     const query = `UPDATE mydbonline.user  SET ??=?, ??=? WHERE ??=?`;
     const fields: (string | boolean | Date | number)[] = ['deleted', deleted, 'deletedAt', deletedAt, 'id', id];
+    return { query, fields };
+  }
+
+  async updateUser(
+    nomeCompleto?: string,
+    email?: string,
+    dataNascimento?: Date,
+    telefone?: string,
+    cep?: string,
+    endereco?: string,
+    complemento?: string,
+    bairro?: string,
+    cidade?: string,
+    uf?: string,
+    updateAt?: Date,
+    id?: number
+  ) {
+    const query = `UPDATE mydbonline.user 
+    set ??=?, ??=?, ??=?,??=?, ??=?, ??=?, ??=?, ??=?, ??=?, ??=?, ??=? where ??=?`;
+    const fields: (string | number | Date | undefined)[] = [
+      'nomeCompleto',
+      nomeCompleto,
+      'email',
+      email,
+      'dataNascimento',
+      dataNascimento,
+      'telefone',
+      telefone,
+      'cep',
+      cep,
+      'endereco',
+      endereco,
+      'complemento',
+      complemento,
+      'bairro',
+      bairro,
+      'cidade',
+      cidade,
+      'uf',
+      uf,
+      'updateAt',
+      updateAt,
+      'id',
+      id,
+    ];
     return { query, fields };
   }
 }

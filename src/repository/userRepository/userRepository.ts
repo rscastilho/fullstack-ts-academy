@@ -39,6 +39,22 @@ class userRepository {
   async restoreUser(deleted: boolean, deletedAt: Date, id: number) {
     return await _userQuery.restoreUser(deleted, deletedAt, id);
   }
+  async updateUser(
+    nomeCompleto?: string,
+    email?: string,
+    dataNascimento?: Date,
+    telefone?: string,
+    cep?: string,
+    endereco?: string,
+    complemento?: string,
+    bairro?: string,
+    cidade?: string,
+    uf?: string,
+    updateAt?: Date,
+    id?: number
+  ) {
+    return await _userQuery.updateUser(nomeCompleto, email, dataNascimento, telefone, cep, endereco, complemento, bairro, cidade, uf, updateAt, id);
+  }
 }
 
 export default new userRepository();
