@@ -19,9 +19,11 @@ class userQueries {
     return { query, fields };
   }
 
+  
+
   async userByNumeroMatricula(numeroMatricula: number) {
-    const query = `SELECT numeroMatricula FROM mydbonline.user where ?? = ?`;
-    const fields: [string, number] = ['numeoMatricula', numeroMatricula];
+    const query = `SELECT id, numeroMatricula FROM mydbonline.user where ?? = ?`;
+    const fields: [string, number] = ['numeroMatricula', numeroMatricula];
     return { query, fields };
   }
 

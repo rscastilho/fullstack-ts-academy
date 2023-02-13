@@ -9,6 +9,10 @@ class userRepository {
     return await _userQuery.userByEmail(email);
   }
 
+  async userByNumeroMatricula(userByNumeroMatricula: number) {
+    return await _userQuery.userByNumeroMatricula(userByNumeroMatricula);
+  }
+
   async addErrors(quantidadeErros: number, id: number) {
     return await _userQuery.addErrors(quantidadeErros, id);
   }
