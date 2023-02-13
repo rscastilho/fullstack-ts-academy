@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import _userRepository from '../../repository/userRepository/userRepository';
 import { connection } from './../../data/dbConnect';
 import { RowDataPacket } from 'mysql2';
+import { StatusCodes } from 'http-status-codes';
 import fs from 'fs';
 
 class userService {
@@ -26,12 +27,12 @@ class userService {
 
       const avatarQuery = await _userRepository.addAvatar(+id, avatar || 'image.jpg');
       const resultQuery: RowDataPacket[] = await connection().promise().query(avatarQuery.query, avatarQuery.fields);
-      if (!resultQuery[0].affectedRows) return res.status(400).json({ message: 'Erro ao salvar avatar' });
+      if (!resultQuery[0].affectedRows) return res.status(StatusCodes.BAD_REQUEST).json({ message: 'Erro ao salvar avatar' });
 
-      return res.status(200).json({ message: 'Avatar salvo com sucesso!' });
+      return res.status(StatusCodes.OK).json({ message: 'Avatar salvo com sucesso!' });
     } catch (error) {
       console.log('ERR', error);
-      return res.status(200).json({ message: error });
+      return res.status(StatusCodes.OK).json({ message: error });
     }
   }
 
@@ -42,7 +43,7 @@ class userService {
       const pegarUserQuery = await _userRepository.userById(+id);
       const pegarUser: RowDataPacket[] = await connection().promise().query(pegarUserQuery.query, pegarUserQuery.fields);
       if (!pegarUser[0].length) {
-        return res.status(404).json({ message: 'Usuário não cadastrado' });
+        return res.status(StatusCodes.BAD_REQUEST).json({ message: 'Usuário não cadastrado' });
       }
 
       const deleted = !pegarUser[0][0]['deleted'];
@@ -51,17 +52,17 @@ class userService {
         const deleteUserQuery = await _userRepository.deleteUser(deleted, deletedAt, +id);
         const deleteUser: RowDataPacket[] = await connection().promise().query(deleteUserQuery.query, deleteUserQuery.fields);
         if (deleteUser[0]['affectedRows'] > 0) {
-          return res.status(200).json({ message: 'Usuário restaurado com sucesso!' });
+          return res.status(StatusCodes.OK).json({ message: 'Usuário restaurado com sucesso!' });
         } else {
-          return res.status(400).json({ message: 'Erro ao restaurar usuário.' });
+          return res.status(StatusCodes.BAD_REQUEST).json({ message: 'Erro ao restaurar usuário.' });
         }
       } else {
         const deleteUserQuery = await _userRepository.deleteUser(deleted, deletedAt, +id);
         const deleteUser: RowDataPacket[] = await connection().promise().query(deleteUserQuery.query, deleteUserQuery.fields);
         if (deleteUser[0]['affectedRows'] > 0) {
-          return res.status(200).json({ message: 'Usuario deletado com sucesso!' });
+          return res.status(StatusCodes.OK).json({ message: 'Usuario deletado com sucesso!' });
         } else {
-          return res.status(400).json({ message: 'Erro ao deletar usuario.' });
+          return res.status(StatusCodes.BAD_REQUEST).json({ message: 'Erro ao deletar usuario.' });
         }
       }
     } catch (error) {
@@ -76,7 +77,7 @@ class userService {
       const pegarUserQuery = await _userRepository.userById(+id);
       const pegarUser: RowDataPacket[] = await connection().promise().query(pegarUserQuery.query, pegarUserQuery.fields);
       if (!pegarUser[0].length) {
-        return res.status(404).json({ message: 'Usuário não cadastrado' });
+        return res.status(StatusCodes.BAD_REQUEST).json({ message: 'Usuário não cadastrado' });
       }
       const deleted: boolean = false;
       const deletedAt: Date = new Date();
@@ -84,9 +85,9 @@ class userService {
       const deleteUserQuery = await _userRepository.deleteUser(deleted, deletedAt, +id);
       const deleteUser: RowDataPacket[] = await connection().promise().query(deleteUserQuery.query, deleteUserQuery.fields);
       if (deleteUser[0]['affectedRows'] > 0) {
-        return res.status(200).json({ message: 'Usuário restaurado com sucesso!' });
+        return res.status(StatusCodes.OK).json({ message: 'Usuário restaurado com sucesso!' });
       } else {
-        return res.status(400).json({ message: 'Erro ao restaurar usuário.' });
+        return res.status(StatusCodes.BAD_REQUEST).json({ message: 'Erro ao restaurar usuário.' });
       }
     } catch (error: any) {
       return error.message;
@@ -100,9 +101,9 @@ class userService {
       const unblockQuery = await _userRepository.unblockUser(blocked, new Date(), +id);
       const unblock = await connection().promise().query(unblockQuery.query, unblockQuery.fields);
       if (unblock[0]['affectedRows'] > 0) {
-        res.status(200).json({ message: `Usuário desbloqueado com sucesso!` });
+        res.status(StatusCodes.OK).json({ message: `Usuário desbloqueado com sucesso!` });
       } else {
-        res.status(400).json({ message: `Erro ao desbloquear usuário` });
+        res.status(StatusCodes.BAD_REQUEST).json({ message: `Erro ao desbloquear usuário` });
       }
     } catch (error) {
       return res;
@@ -117,7 +118,7 @@ class userService {
       const pegaUserQuery = await _userRepository.userById(+id);
       const userById: RowDataPacket[] = await connection().promise().query(pegaUserQuery.query, pegaUserQuery.fields);
       if (!userById[0][0]) {
-        return res.status(404).json({ message: 'Usuário não encontrado' });
+        return res.status(StatusCodes.BAD_REQUEST).json({ message: 'Usuário não encontrado' });
       } else {
         nomeCompleto ? nomeCompleto : (nomeCompleto = userById[0][0]['nomeCompleto']);
         email ? email : (email = userById[0][0]['email']);
@@ -132,7 +133,7 @@ class userService {
         const updateUserQuery = await _userRepository.updateUser(nomeCompleto, email, dataNascimento, telefone, cep, endereco, complemento, bairro, cidade, uf, updateAt, +id);
         const updateUser: RowDataPacket[] = await connection().promise().query(updateUserQuery.query, updateUserQuery.fields);
         if (updateUser[0]['affectedRows'] > 0) {
-          return res.status(200).json({ message: `Usuário ${userById[0][0]['email']} atualizado com sucesso!` });
+          return res.status(StatusCodes.OK).json({ message: `Usuário ${userById[0][0]['email']} atualizado com sucesso!` });
         }
       }
     } catch (error) {
@@ -145,9 +146,9 @@ class userService {
       const getAllUserQuery = await _userRepository.getAllUser();
       const getAllUser = await connection().promise().query(getAllUserQuery.query);
       if (getAllUser[0].length < 1) {
-        return res.status(400).json({ resultados: getAllUser[0].length, message: 'Nenhum usuário encontrato' });
+        return res.status(StatusCodes.BAD_REQUEST).json({ resultados: getAllUser[0].length, message: 'Nenhum usuário encontrato' });
       } else {
-        return res.status(200).json({ resultados: getAllUser[0].length, data: getAllUser[0] });
+        return res.status(StatusCodes.OK).json({ resultados: getAllUser[0].length, data: getAllUser[0] });
       }
     } catch (error) {
       return error;
