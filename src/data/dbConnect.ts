@@ -2,17 +2,6 @@ import dotenv from 'dotenv';
 dotenv.config();
 import mysql from 'mysql2';
 
-// export const connection = ()=> {
-//   const con = mysql.createPool({
-//     host: process.env.HOST,
-//     user: process.env.USER,
-//     password: process.env.PASSWORD,
-//     database: process.env.DATABASE,
-//     waitForConnections: true,
-//     connectionLimit: 3,
-//   });
-//   return con;
-// }
 
 export const connection = () => {
   const con = mysql.createPool({
@@ -28,6 +17,20 @@ export const connection = () => {
   });
   return con;
 };
+
+
+// export const connection = ()=> {
+//   const con = mysql.createPool({
+//     host: process.env.HOST,
+//     user: process.env.USER,
+//     password: process.env.PASSWORD,
+//     database: process.env.DATABASE,
+//     waitForConnections: true,
+//     connectionLimit: 3,
+//   });
+//   return con;
+// }
+
 
 // const connection = mysql.createConnection(process.env.DATABASE_URL)
 // console.log('Connected to PlanetScale!')

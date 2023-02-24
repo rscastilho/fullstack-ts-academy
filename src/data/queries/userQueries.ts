@@ -7,6 +7,12 @@ class userQueries {
     return { query, fields };
   }
 
+  async userByNomeCompleto(nomeCompleto: string) {
+    const query = `SELECT numeroMatricula, nomeCompleto, email, cpf, dataNascimento, telefone, avatar, cep, endereco, complemento, bairro, cidade, uf FROM mydbonline.user where ?? like ?`;
+    const fields: string[] = ['nomeCompleto', nomeCompleto];
+    return { query, fields };
+  }
+
   async userByEmail(email: string) {
     const query = `SELECT id, email, blocked, deleted, senhaExpirar, senha FROM mydbonline.user where ?? = ?`;
     const fields: string[] = ['email', email];
@@ -18,8 +24,6 @@ class userQueries {
     const fields: string[] = ['cpf', cpf];
     return { query, fields };
   }
-
-  
 
   async userByNumeroMatricula(numeroMatricula: number) {
     const query = `SELECT id, numeroMatricula FROM mydbonline.user where ?? = ?`;

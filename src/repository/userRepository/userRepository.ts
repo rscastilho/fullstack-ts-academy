@@ -5,6 +5,10 @@ class userRepository {
     return await _userQuery.userById(id);
   }
 
+  async userByNomeCompleto(nomeCompleto: string) {
+    return await _userQuery.userByNomeCompleto(nomeCompleto);
+  }
+
   async userByEmail(email: string) {
     return await _userQuery.userByEmail(email);
   }

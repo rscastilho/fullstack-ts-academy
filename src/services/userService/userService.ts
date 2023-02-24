@@ -154,6 +154,23 @@ class userService {
       return error;
     }
   }
+
+  async getUserByNomeCompleto(req: Request, res: Response) {
+    try {
+      const { nomeCompleto } = req.body;
+      
+      const getUserQuery = await _userRepository.userByNomeCompleto(`%${nomeCompleto}%`);
+      const getUser = await connection().promise().query(getUserQuery.query, getUserQuery.fields);
+
+      if (getUser[0].length < 1) {
+        return res.status(StatusCodes.BAD_REQUEST).json({ message: 'Usuário não encontrado' });
+      } else {
+        return res.status(StatusCodes.OK).json({ registros: getUser[0].length, data: getUser[0] });
+      }
+    } catch (error) {
+      return error;
+    }
+  }
 }
 
 export default new userService();

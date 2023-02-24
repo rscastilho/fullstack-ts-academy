@@ -1,9 +1,9 @@
 import { Request, Response } from 'express';
-import { user } from '../../interfaces/user';
-import _userRepository from '../../repository/userRepository/userRepository';
+import { StatusCodes } from 'http-status-codes';
 import { connection } from '../../data/dbConnect';
 import { RowDataPacket } from 'mysql2';
-import { StatusCodes } from 'http-status-codes';
+import { user } from '../../interfaces/user';
+import _userRepository from '../../repository/userRepository/userRepository';
 import _presencaRepository from '../../repository/presencaRepository/presencaRepository';
 
 class RegistrarService {
