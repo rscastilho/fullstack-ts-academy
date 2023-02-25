@@ -6,6 +6,8 @@ import { StatusCodes } from 'http-status-codes';
 import fs from 'fs';
 
 class userService {
+
+  
   async addAvatar(req: Request, res: Response): Promise<Response> {
     try {
       const { id } = req.params;
