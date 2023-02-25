@@ -2,49 +2,46 @@ import { RowDataPacket } from 'mysql2';
 import { createTracing } from 'trace_events';
 import { connection } from '../../data/dbConnect';
 import _funcaoQueries from '../../data/queries/funcaoQueries';
-import { retorno } from '../../interfaces/iretorno';
-
-
+import { iRetorno } from '../../interfaces/iRetorno';
 
 class funcaoRepository {
-  async funcaoById(id: number) {
+  async funcaoById(id: number): Promise<iRetorno> {
     try {
       const funcaoQuery = _funcaoQueries.getFuncaoById(id);
-      const result = await connection().promise().query(funcaoQuery.query, funcaoQuery.fields);
+      const result: RowDataPacket[] = await connection().promise().query(funcaoQuery.query, funcaoQuery.fields);
       if (!result[0].length) {
         return { message: 'Função não encontrada', status: 400 };
       } else {
-        return result;
+        return { data: result[0], status: 200 };
       }
-    } catch (error) {
+    } catch (error: any) {
       return error;
     }
   }
 
-  async funcaoByDescricao(descricao: string) {
+  async funcaoByDescricao(descricao: string): Promise<iRetorno> {
     try {
       const funcaoQuery = await _funcaoQueries.getByDescricao(descricao);
-      const result = await connection().promise().query(funcaoQuery.query, funcaoQuery.fields);
+      const result: RowDataPacket[] = await connection().promise().query(funcaoQuery.query, funcaoQuery.fields);
 
       if (!result[0].length) {
         return { message: 'Função não encontrada', status: 400 };
       } else {
-        return result;
+        return { data: result[0], status: 200, registros: result[0].length };
       }
-    } catch (error) {
+    } catch (error: any) {
       return error;
     }
   }
 
-  
-  async addFuncao(descricao: string) : Promise<retorno> {
+  async addFuncao(descricao: string): Promise<iRetorno> {
     try {
       let createAt: Date = new Date();
       const funcaoQuery = _funcaoQueries.addDescricao(descricao, createAt);
       const result: RowDataPacket[] = await connection().promise().query(funcaoQuery.query, funcaoQuery.fields);
       if (result[0].affectedRows > 0) {
-        const resulId = await this.funcaoById(result[0].insertId);
-        return { message: 'Cadatrado realizado com sucesso!', status: 200, data: resulId };
+        const funcaoCadastrada = await this.funcaoById(result[0].insertId);
+        return { message: 'Cadastrado realizado com sucesso!', status: 200, data: funcaoCadastrada };
       } else {
         return { message: 'Erro ao cadastrar função', status: 400 };
       }

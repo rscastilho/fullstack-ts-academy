@@ -1,6 +1,7 @@
-export interface retorno{
-    message: string,
-    status: number,
-    data?: string[],
-    error?: Error
-  }
+export interface iRetorno {
+  registros?: number;
+  message?: string;
+  status: number;
+  data?: string[] | any;
+  error?: Error;
+}
