@@ -13,7 +13,7 @@ class funcaoController {
   private funcao() {
     this.router.get('/funcaobydescricao', funcaoByDescricaoValidation.funcaoByDescricao(), validation, _funcaoService.funcaoByDescricao);
     this.router.get('/:id', _funcaoService.funcaoById);
-    this.router.post('/', _funcaoService.addFuncao);
+    this.router.post('/', funcaoByDescricaoValidation.funcaoByDescricao(), validation, _funcaoService.addFuncao);
   }
 }
 

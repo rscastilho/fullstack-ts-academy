@@ -1,8 +1,21 @@
 import _userQuery from '../../data/queries/userQueries';
+import { iRetorno } from '../../interfaces/iRetorno';
+import { connection } from './../../data/dbConnect';
+import { RowDataPacket } from 'mysql2';
 
 class userRepository {
-  async userById(id: number) {
-    return await _userQuery.userById(id);
+  async userById(id: number): Promise<iRetorno> {
+    try {
+      const userByIdQuery = _userQuery.userById(id);
+      const userById: RowDataPacket[] = await connection().promise().query(userByIdQuery.query, userByIdQuery.fields);
+      if (!userById[0].length) {
+        return { message: 'Id não encontado', status: 400 };
+      } else {
+        return { status: 200, data: userById[0] };
+      }
+    } catch (error: any) {
+      return error;
+    }
   }
 
   async userByNomeCompleto(nomeCompleto: string) {
@@ -64,8 +77,18 @@ class userRepository {
     return await _userQuery.updateUser(nomeCompleto, email, dataNascimento, telefone, cep, endereco, complemento, bairro, cidade, uf, updateAt, id);
   }
 
-  async getAllUser() {
-    return await _userQuery.getAllUser();
+  async getAllUser(): Promise<iRetorno> {
+    try {
+      const getAllQuery = _userQuery.getAllUser();
+      const getAll = await connection().promise().query(getAllQuery.query);
+      if(!getAll[0].length){
+        return {message: "Nenhum usuário encontrado", status: 400, data: getAll[0] };
+      } else{
+        return { registros: getAll[0].length, status: 200, data: getAll[0] };
+      }
+    } catch (error: any) {
+      return error;
+    }
   }
 }
 

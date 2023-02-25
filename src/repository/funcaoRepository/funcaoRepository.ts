@@ -1,10 +1,10 @@
 import { RowDataPacket } from 'mysql2';
-import { createTracing } from 'trace_events';
 import { connection } from '../../data/dbConnect';
 import _funcaoQueries from '../../data/queries/funcaoQueries';
 import { iRetorno } from '../../interfaces/iRetorno';
 
 class funcaoRepository {
+  
   async funcaoById(id: number): Promise<iRetorno> {
     try {
       const funcaoQuery = _funcaoQueries.getFuncaoById(id);
@@ -41,7 +41,7 @@ class funcaoRepository {
       const result: RowDataPacket[] = await connection().promise().query(funcaoQuery.query, funcaoQuery.fields);
       if (result[0].affectedRows > 0) {
         const funcaoCadastrada = await this.funcaoById(result[0].insertId);
-        return { message: 'Cadastrado realizado com sucesso!', status: 200, data: funcaoCadastrada };
+        return { message: 'Função cadastrada com sucesso!', status: 200, data: funcaoCadastrada };
       } else {
         return { message: 'Erro ao cadastrar função', status: 400 };
       }

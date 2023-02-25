@@ -1,7 +1,7 @@
 import { user } from '../../interfaces/user';
 
 class userQueries {
-  async userById(id: number) {
+  userById(id: number) {
     const query = `SELECT * FROM mydbonline.user WHERE ?? = ?`;
     const fields: [string, number] = ['id', id];
     return { query, fields };
@@ -123,7 +123,7 @@ class userQueries {
     ];
     return { query, fields };
   }
-  async getAllUser() {
+  getAllUser() {
     const query = `SELECT id, numeroMatricula, nomeCompleto, email, cpf, dataNascimento, telefone, avatar, cep, endereco, complemento, bairro, cidade, uf FROM mydbonline.user`;
     return { query };
   }

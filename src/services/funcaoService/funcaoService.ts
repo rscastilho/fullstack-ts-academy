@@ -10,13 +10,11 @@ class funcaoService {
       if (isNaN(+id)) {
         return res.json({ message: 'Digite um ID válido, em formato número' });
       }
-
       const funcao: iRetorno = await _funcaoRepository.funcaoById(+id);
-
       if (funcao.status === 400) {
-        return res.status(StatusCodes.BAD_REQUEST).json({ message: funcao.message });
+        return res.status(StatusCodes.BAD_REQUEST).json(funcao);
       } else {
-        return res.status(StatusCodes.OK).json({ data: funcao.data });
+        return res.status(StatusCodes.OK).json(funcao);
       }
     } catch (error: any) {
       return error;
@@ -28,9 +26,9 @@ class funcaoService {
       const { descricao } = req.body;
       const funcao: iRetorno = await _funcaoRepository.funcaoByDescricao(`%${descricao}%`);
       if (funcao.status === 400) {
-        return res.status(StatusCodes.BAD_REQUEST).json({ message: funcao.message });
+        return res.status(StatusCodes.BAD_REQUEST).json(funcao);
       } else {
-        return res.status(StatusCodes.OK).json({ resgistros: funcao.registros, data: funcao.data });
+        return res.status(StatusCodes.OK).json(funcao);
       }
     } catch (error: any) {
       return error;
@@ -44,9 +42,9 @@ class funcaoService {
       if (funcao.status === 400) {
         const result: iRetorno = await _funcaoRepository.addFuncao(descricao);
         if (result.status === 200) {
-          return res.status(StatusCodes.OK).json({ message: result.message, data: result.data });
+          return res.status(StatusCodes.OK).json(result);
         } else {
-          return res.status(StatusCodes.BAD_REQUEST).json({ message: result.message });
+          return res.status(StatusCodes.BAD_REQUEST).json(result);
         }
       } else {
         return res.json({ message: `Função ${descricao} já existe!` });

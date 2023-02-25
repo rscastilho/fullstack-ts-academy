@@ -4,10 +4,9 @@ import { connection } from './../../data/dbConnect';
 import { RowDataPacket } from 'mysql2';
 import { StatusCodes } from 'http-status-codes';
 import fs from 'fs';
+import { iRetorno } from './../../interfaces/iRetorno';
 
 class userService {
-
-  
   async addAvatar(req: Request, res: Response): Promise<Response> {
     try {
       const { id } = req.params;
@@ -43,12 +42,10 @@ class userService {
     try {
       const { id } = req.params;
       const pegarUserQuery = await _userRepository.userById(+id);
-      const pegarUser: RowDataPacket[] = await connection().promise().query(pegarUserQuery.query, pegarUserQuery.fields);
-      if (!pegarUser[0].length) {
-        return res.status(StatusCodes.BAD_REQUEST).json({ message: 'Usuário não cadastrado' });
+      if (pegarUserQuery.status === 400) {
+        return res.status(StatusCodes.BAD_REQUEST).json(pegarUserQuery);
       }
-
-      const deleted = !pegarUser[0][0]['deleted'];
+      const deleted = !pegarUserQuery.data[0]['deleted'];
       const deletedAt: Date = new Date();
       if (!deleted) {
         const deleteUserQuery = await _userRepository.deleteUser(deleted, deletedAt, +id);
@@ -77,10 +74,10 @@ class userService {
     try {
       const { id } = req.params;
       const pegarUserQuery = await _userRepository.userById(+id);
-      const pegarUser: RowDataPacket[] = await connection().promise().query(pegarUserQuery.query, pegarUserQuery.fields);
-      if (!pegarUser[0].length) {
-        return res.status(StatusCodes.BAD_REQUEST).json({ message: 'Usuário não cadastrado' });
-      }
+      // const pegarUser: RowDataPacket[] = await connection().promise().query(pegarUserQuery.query, pegarUserQuery.fields);
+      // if (!pegarUser[0].length) {
+      //   return res.status(StatusCodes.BAD_REQUEST).json({ message: 'Usuário não cadastrado' });
+      // }
       const deleted: boolean = false;
       const deletedAt: Date = new Date();
 
@@ -112,47 +109,47 @@ class userService {
     }
   }
 
-  async updateUser(req: Request, res: Response) {
+  async updateUser(req: Request, res: Response): Promise<Response | iRetorno | any> {
     try {
       const { id } = req.params;
       let { nomeCompleto, email, dataNascimento, telefone, cep, endereco, complemento, bairro, cidade, uf } = req.body;
       const updateAt = new Date();
-      const pegaUserQuery = await _userRepository.userById(+id);
-      const userById: RowDataPacket[] = await connection().promise().query(pegaUserQuery.query, pegaUserQuery.fields);
-      if (!userById[0][0]) {
-        return res.status(StatusCodes.BAD_REQUEST).json({ message: 'Usuário não encontrado' });
+      const pegaUser = await _userRepository.userById(+id);
+
+      if (pegaUser.status === 400) {
+        return res.status(StatusCodes.BAD_REQUEST).json(pegaUser);
       } else {
-        nomeCompleto ? nomeCompleto : (nomeCompleto = userById[0][0]['nomeCompleto']);
-        email ? email : (email = userById[0][0]['email']);
-        dataNascimento ? dataNascimento : (dataNascimento = userById[0][0]['dataNascimento']);
-        telefone ? telefone : (telefone = userById[0][0]['telefone']);
-        cep ? cep : (cep = userById[0][0]['cep']);
-        endereco ? endereco : (endereco = userById[0][0]['endereco']);
-        complemento ? complemento : (complemento = userById[0][0]['complemento']);
-        bairro ? bairro : (bairro = userById[0][0]['bairro']);
-        cidade ? cidade : (cidade = userById[0][0]['cidade']);
-        uf ? uf : (uf = userById[0][0]['uf']);
+        nomeCompleto ? nomeCompleto : (nomeCompleto = pegaUser.data[0]['nomeCompleto']);
+        email ? email : (email = pegaUser.data[0]['email']);
+        dataNascimento ? dataNascimento : (dataNascimento = pegaUser.data[0]['dataNascimento']);
+        telefone ? telefone : (telefone = pegaUser.data[0]['telefone']);
+        cep ? cep : (cep = pegaUser.data[0]['cep']);
+        endereco ? endereco : (endereco = pegaUser.data[0]['endereco']);
+        complemento ? complemento : (complemento = pegaUser.data[0]['complemento']);
+        bairro ? bairro : (bairro = pegaUser.data[0]['bairro']);
+        cidade ? cidade : (cidade = pegaUser.data[0]['cidade']);
+        uf ? uf : (uf = pegaUser.data[0]['uf']);
+
         const updateUserQuery = await _userRepository.updateUser(nomeCompleto, email, dataNascimento, telefone, cep, endereco, complemento, bairro, cidade, uf, updateAt, +id);
         const updateUser: RowDataPacket[] = await connection().promise().query(updateUserQuery.query, updateUserQuery.fields);
         if (updateUser[0]['affectedRows'] > 0) {
-          return res.status(StatusCodes.OK).json({ message: `Usuário ${userById[0][0]['email']} atualizado com sucesso!` });
+          return res.status(StatusCodes.OK).json({ message: `Usuário ${pegaUser.data[0]['email']} atualizado com sucesso!` });
         }
       }
-    } catch (error) {
-      return res.send(error);
+    } catch (error: any) {
+      return error;
     }
   }
 
-  async getallUser(req: Request, res: Response) {
+  async getallUser(req: Request, res: Response): Promise<Response | iRetorno> {
     try {
-      const getAllUserQuery = await _userRepository.getAllUser();
-      const getAllUser = await connection().promise().query(getAllUserQuery.query);
-      if (getAllUser[0].length < 1) {
-        return res.status(StatusCodes.BAD_REQUEST).json({ resultados: getAllUser[0].length, message: 'Nenhum usuário encontrato' });
+      const getAllUser = await _userRepository.getAllUser();
+      if (getAllUser.status === 400) {
+        return res.status(StatusCodes.BAD_REQUEST).json(getAllUser);
       } else {
-        return res.status(StatusCodes.OK).json({ resultados: getAllUser[0].length, data: getAllUser[0] });
+        return res.status(StatusCodes.OK).json(getAllUser);
       }
-    } catch (error) {
+    } catch (error: any) {
       return error;
     }
   }
@@ -160,7 +157,7 @@ class userService {
   async getUserByNomeCompleto(req: Request, res: Response) {
     try {
       const { nomeCompleto } = req.body;
-      
+
       const getUserQuery = await _userRepository.userByNomeCompleto(`%${nomeCompleto}%`);
       const getUser = await connection().promise().query(getUserQuery.query, getUserQuery.fields);
 

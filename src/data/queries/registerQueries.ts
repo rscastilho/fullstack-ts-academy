@@ -1,5 +1,5 @@
 class registerQueries {
-   async register(
+   register(
     numeroMatricula: number,
     email: string,
     nomeCompleto: string,

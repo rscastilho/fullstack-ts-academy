@@ -1,4 +1,8 @@
 import _registerQueries from '../../data/queries/registerQueries';
+import { iRetorno } from '../../interfaces/iRetorno';
+import userRepository from '../userRepository/userRepository';
+import { connection } from './../../data/dbConnect';
+import { RowDataPacket } from 'mysql2';
 
 class registerUser {
   async addUser(
@@ -19,9 +23,10 @@ class registerUser {
     avatar: string,
     createAt: Date,
     senhaExpiraEm: Date
-  ) {
-    return await _registerQueries.register(
-      numeroMatricula,
+  ) : Promise<iRetorno> {
+
+
+    const registerUserQuery = _registerQueries.register(  numeroMatricula,
       email,
       nomeCompleto,
       cpf,
@@ -37,8 +42,11 @@ class registerUser {
       dataInicio,
       avatar,
       createAt,
-      senhaExpiraEm
-    );
+      senhaExpiraEm)
+    const registerUser: RowDataPacket[] = await connection().promise().query(registerUserQuery.query, registerUserQuery.fields)
+    const userRegistred = await userRepository.userById(registerUser[0].insertId)
+    return {message: "Usuário cadastrado com sucesso!", data: userRegistred.data, status: 200}
+        
   }
 }
 

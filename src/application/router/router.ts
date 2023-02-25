@@ -4,6 +4,7 @@ import _presencaController from '../controllers/presencaController/presencaContr
 import _registerController from '../controllers/registerController/registerController';
 import _userController from '../controllers/userController/userController';
 import _funcaoController from '../controllers/funcaoController/funcaoController';
+import _perfilController from '../controllers/perfilController/perfilController';
 
 class routers {
   routers = express.Router();
@@ -18,6 +19,7 @@ class routers {
     this.routers.use('/api/user', _userController);
     this.routers.use('/api/presenca', _presencaController);
     this.routers.use('/api/funcao', _funcaoController);
+    this.routers.use('/api/perfil', _perfilController);
   }
 }
 
