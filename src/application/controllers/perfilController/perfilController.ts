@@ -8,7 +8,7 @@ class perfilController {
   }
 
   perfil() {
-    this.router.post('/', _perfilService.addPerfil);
+    this.router.post('/', _perfilService.updatePerfil);
   }
 }
 

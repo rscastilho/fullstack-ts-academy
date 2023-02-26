@@ -22,12 +22,46 @@ class userRepository {
     return await _userQuery.userByNomeCompleto(nomeCompleto);
   }
 
-  async userByEmail(email: string) {
-    return await _userQuery.userByEmail(email);
+  async userByEmail(email: string): Promise<iRetorno> {
+    try {
+      const userByEmailQuery = _userQuery.userByEmail(email);
+      const userByEmail: RowDataPacket[] = await connection().promise().query(userByEmailQuery.query, userByEmailQuery.fields);
+      if (!userByEmail[0].length) {
+        return { message: 'Usuário não encontrado', status: 400 };
+      } else {
+        return { status: 200, data: userByEmail[0] };
+      }
+    } catch (error: any) {
+      return error;
+    }
   }
 
-  async userByNumeroMatricula(userByNumeroMatricula: number) {
-    return await _userQuery.userByNumeroMatricula(userByNumeroMatricula);
+  async userByNumeroMatricula(userByNumeroMatricula: number): Promise<iRetorno> {
+    try {
+      const userByNumeroMatriculaQuery = _userQuery.userByNumeroMatricula(userByNumeroMatricula);
+      const userByMatricula: RowDataPacket[] = await connection().promise().query(userByNumeroMatriculaQuery.query, userByNumeroMatriculaQuery.fields);
+      if (!userByMatricula[0].length) {
+        return { message: 'Usuário não encontrado', status: 400 };
+      } else {
+        return { status: 200, data: userByMatricula[0] };
+      }
+    } catch (error: any) {
+      return error;
+    }
+  }
+
+  async userByCpf(cpf: string): Promise<iRetorno> {
+    try {
+      const userByCpfQuery = _userQuery.userByCpf(cpf);
+      const userByCpf: RowDataPacket[] = await connection().promise().query(userByCpfQuery.query, userByCpfQuery.fields);
+      if (!userByCpf[0].length) {
+        return { message: 'Usuário não encontrado', status: 400 };
+      } else {
+        return { status: 200, data: userByCpf[0] };
+      }
+    } catch (error: any) {
+      return error;
+    }
   }
 
   async addErrors(quantidadeErros: number, id: number) {
@@ -73,17 +107,24 @@ class userRepository {
     uf?: string,
     updateAt?: Date,
     id?: number
-  ) {
-    return await _userQuery.updateUser(nomeCompleto, email, dataNascimento, telefone, cep, endereco, complemento, bairro, cidade, uf, updateAt, id);
+  ): Promise<iRetorno> {
+    const updateUserQuery = _userQuery.updateUser(nomeCompleto, email, dataNascimento, telefone, cep, endereco, complemento, bairro, cidade, uf, updateAt, +id!);
+    const updateUser: RowDataPacket[] = await connection().promise().query(updateUserQuery.query, updateUserQuery.fields);
+
+    if (updateUser[0].affectedRows > 0) {
+      return { message: `Usuário ${email} atualizado com sucesso!`, status: 200 };
+    } else {
+      return { message: `Erro ao atualizar usuário ${email}.`, status: 400 };
+    }
   }
 
   async getAllUser(): Promise<iRetorno> {
     try {
       const getAllQuery = _userQuery.getAllUser();
       const getAll = await connection().promise().query(getAllQuery.query);
-      if(!getAll[0].length){
-        return {message: "Nenhum usuário encontrado", status: 400, data: getAll[0] };
-      } else{
+      if (!getAll[0].length) {
+        return { message: 'Nenhum usuário encontrado', status: 400, data: getAll[0] };
+      } else {
         return { registros: getAll[0].length, status: 200, data: getAll[0] };
       }
     } catch (error: any) {

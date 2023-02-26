@@ -130,11 +130,8 @@ class userService {
         cidade ? cidade : (cidade = pegaUser.data[0]['cidade']);
         uf ? uf : (uf = pegaUser.data[0]['uf']);
 
-        const updateUserQuery = await _userRepository.updateUser(nomeCompleto, email, dataNascimento, telefone, cep, endereco, complemento, bairro, cidade, uf, updateAt, +id);
-        const updateUser: RowDataPacket[] = await connection().promise().query(updateUserQuery.query, updateUserQuery.fields);
-        if (updateUser[0]['affectedRows'] > 0) {
-          return res.status(StatusCodes.OK).json({ message: `Usuário ${pegaUser.data[0]['email']} atualizado com sucesso!` });
-        }
+        const updateUser = await _userRepository.updateUser(nomeCompleto, email, dataNascimento, telefone, cep, endereco, complemento, bairro, cidade, uf, updateAt, +id);
+        return res.status(updateUser.status).json(updateUser);
       }
     } catch (error: any) {
       return error;

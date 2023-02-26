@@ -13,19 +13,19 @@ class userQueries {
     return { query, fields };
   }
 
-  async userByEmail(email: string) {
+  userByEmail(email: string) {
     const query = `SELECT id, email, blocked, deleted, senhaExpirar, senha FROM mydbonline.user where ?? = ?`;
     const fields: string[] = ['email', email];
     return { query, fields };
   }
 
-  async userByCpf(cpf: string) {
+  userByCpf(cpf: string) {
     const query = `SELECT cpf FROM mydbonline.user where ?? = ?`;
     const fields: string[] = ['cpf', cpf];
     return { query, fields };
   }
 
-  async userByNumeroMatricula(numeroMatricula: number) {
+  userByNumeroMatricula(numeroMatricula: number) {
     const query = `SELECT id, numeroMatricula FROM mydbonline.user where ?? = ?`;
     const fields: [string, number] = ['numeroMatricula', numeroMatricula];
     return { query, fields };
@@ -79,7 +79,7 @@ class userQueries {
     return { query, fields };
   }
 
-  async updateUser(
+  updateUser(
     nomeCompleto?: string,
     email?: string,
     dataNascimento?: Date,

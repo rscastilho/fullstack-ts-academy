@@ -8,6 +8,7 @@ import utils from '../../application/util/utils';
 import _rashPassword from '../../application/util/passwordHash';
 import { iRetorno } from './../../interfaces/iRetorno';
 import { StatusCodes } from 'http-status-codes';
+import _perfilRepository from '../../repository/perfilRepository/perfilRepository';
 
 class registerService {
   constructor() {
@@ -24,27 +25,8 @@ class registerService {
       //pega a senha e faz o hash
       dados.senha = await _rashPassword.hashPassword(dados.senha);
 
-      // const result = await _registerRepository.addUser(
-      //   dados.numeroMatricula,
-      //   dados.email,
-      //   dados.nomeCompleto,
-      //   dados.cpf,
-      //   dados.dataNascimento,
-      //   dados.telefone,
-      //   dados.senha,
-      //   dados.cep,
-      //   dados.endereco,
-      //   dados.complemento,
-      //   dados.bairro,
-      //   dados.cidade,
-      //   dados.uf,
-      //   dados.dataInicio,
-      //   dados.avatar,
-      //   dados.createAt,
-      //   dados.senhaExpiraEm
-      // );
-
-      const register = await _registerRepository.addUser(dados.numeroMatricula,
+      const register = await _registerRepository.addUser(
+        dados.numeroMatricula,
         dados.email,
         dados.nomeCompleto,
         dados.cpf,
@@ -60,37 +42,15 @@ class registerService {
         dados.dataInicio,
         dados.avatar,
         dados.createAt,
-        dados.senhaExpiraEm)
+        dados.senhaExpiraEm
+      );
 
-        if(register.status === 400){
-          return res.status(StatusCodes.BAD_REQUEST).json(register)
-        } 
-        // if(register.status === 200){
-          return res.status(StatusCodes.OK).json(register)
-        // }
-      // connection().query(result.query, result.fields, (err, data: ResultSetHeader) => {
-      //   err && console.log(err);
-      //   if (data === undefined) {
-      //     if (err?.message.includes('AlreadyExists')) {
-      //       return res.json({
-      //         //pega o campo informado no erro do mysql
-      //         message: `Usuário já cadastrado. Verifique o ${err.message.substring(err.message.indexOf('user.') + 5, err.message.indexOf('_UNIQUE'))} informado.`,
-      //       });
-      //     }
-      //     return res.json({ message: 'Erro ao cadastrar usuário', error: err?.message });
-      //   } else {
-      //     _userRepository.userById(data.insertId).then((result) => {
-      //       connection().query(result.query, result.fields, (err, data: RowDataPacket[]) => {
-      //         err && console.log(err);
-      //         res.status(201).json({
-      //           message: `Usuario ${data[0]['nomeCompleto'].toUpperCase()} -  Matrícula: ${data[0]['numeroMatricula']} cadastrado com sucesso!`,
-      //           data,
-      //         });
-      //         return;
-      //       });
-      //     });
-      //   }
-      // });
+      if (register.status === 400) {
+        return res.status(StatusCodes.BAD_REQUEST).json(register);
+      }
+
+      await _perfilRepository.registarPerfil(register.data[0].id, 3);
+      return res.status(StatusCodes.OK).json(register);
     } catch (error: any) {
       console.log(error);
       res.json(error);
