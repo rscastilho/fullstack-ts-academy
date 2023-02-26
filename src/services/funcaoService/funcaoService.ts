@@ -35,6 +35,8 @@ class funcaoService {
     }
   }
 
+
+  
   async addFuncao(req: Request, res: Response): Promise<Response | iRetorno> {
     try {
       const { descricao } = req.body;

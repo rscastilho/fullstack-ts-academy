@@ -17,6 +17,7 @@ class userService {
       const pickedAvatar: RowDataPacket[] = await connection().promise().query(pickAvatar.query, pickAvatar.fields);
       pickedAvatar[0].map((imgEncontrada: any) => {
         fs.readdir('src/public/avatar', (err, data) => {
+          err && console.log(err);
           data.map((img) => {
             if (img === imgEncontrada.avatar) {
               fs.unlinkSync(`src/public/avatar/${imgEncontrada.avatar}`);
