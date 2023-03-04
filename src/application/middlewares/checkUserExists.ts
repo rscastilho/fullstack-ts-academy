@@ -10,7 +10,7 @@ const checkUserExists = async (req: Request, res: Response, next: NextFunction) 
     const userByCpf = await _userRepository.userByCpf(cpf);
 
     if (userByNumeroMatricula.status === 200) {
-      return res.status(StatusCodes.BAD_REQUEST).json({ message: `Numéro de matricula ${numeroMatricula} já está cadastrado` });
+      return res.status(StatusCodes.BAD_REQUEST).json({ message: `Matricula ${numeroMatricula} já cadastrada` });
     } else if (userByEmail.status === 200) {
       return res.status(StatusCodes.BAD_REQUEST).json({ message: `Email ${email} já está cadastrado` });
     } else if (userByCpf.status === 200) {

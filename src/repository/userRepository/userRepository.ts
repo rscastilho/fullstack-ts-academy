@@ -50,6 +50,7 @@ class userRepository {
     }
   }
 
+  
   async userByCpf(cpf: string): Promise<iRetorno> {
     try {
       const userByCpfQuery = _userQuery.userByCpf(cpf);
