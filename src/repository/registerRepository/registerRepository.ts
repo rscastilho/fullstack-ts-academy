@@ -22,7 +22,8 @@ class registerUser {
     dataInicio: Date,
     avatar: string,
     createAt: Date,
-    senhaExpiraEm: Date
+    senhaExpiraEm: Date,
+    plano_id: number
   ) : Promise<iRetorno> {
 
 
@@ -42,7 +43,8 @@ class registerUser {
       dataInicio,
       avatar,
       createAt,
-      senhaExpiraEm)
+      senhaExpiraEm,
+      plano_id)
     const registerUser: RowDataPacket[] = await connection().promise().query(registerUserQuery.query, registerUserQuery.fields)
     const userRegistred = await userRepository.userById(registerUser[0].insertId)
     return {message: "Usuário cadastrado com sucesso!", data: userRegistred.data, status: 200}

@@ -9,6 +9,7 @@ import _rashPassword from '../../application/util/passwordHash';
 import { iRetorno } from './../../interfaces/iRetorno';
 import { StatusCodes } from 'http-status-codes';
 import _perfilRepository from '../../repository/perfilRepository/perfilRepository';
+import planoRepository from '../../repository/planoRepository/planoRepository';
 
 class registerService {
   constructor() {
@@ -25,7 +26,7 @@ class registerService {
       //pega a senha e faz o hash
       dados.senha = await _rashPassword.hashPassword(dados.senha);
 
-      const register = await _registerRepository.addUser(
+        const register = await _registerRepository.addUser(
         dados.numeroMatricula,
         dados.email,
         dados.nomeCompleto,
@@ -42,7 +43,8 @@ class registerService {
         dados.dataInicio,
         dados.avatar,
         dados.createAt,
-        dados.senhaExpiraEm
+        dados.senhaExpiraEm,
+        dados.plano_id
       );
 
       if (register.status === 400) {

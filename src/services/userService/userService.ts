@@ -27,7 +27,7 @@ class userService {
         });
       });
 
-      const avatarQuery = await _userRepository.addAvatar(+id, avatar || 'image.jpg');
+      const avatarQuery = await _userRepository.addAvatar(+id, avatar || 'imageError.jpg');
       const resultQuery: RowDataPacket[] = await connection().promise().query(avatarQuery.query, avatarQuery.fields);
       if (!resultQuery[0].affectedRows) return res.status(StatusCodes.BAD_REQUEST).json({ message: 'Erro ao salvar avatar' });
 

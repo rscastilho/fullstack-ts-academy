@@ -17,4 +17,5 @@ export interface user {
   avatar: string;
   createAt: Date;
   senhaExpiraEm: Date;
+  plano_id:number;
 }
