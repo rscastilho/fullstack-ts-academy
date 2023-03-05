@@ -4,26 +4,37 @@ class userRegisterValidation {
   userRegisterValidator() {
     return [
       body('numeroMatricula').isNumeric().withMessage('Campo número matricula é de preenchimento obrigatório'),
-      body('email').isEmail().withMessage('Digite um email com formato válido').isLength({ min: 10, max: 65 }).withMessage('email com quantidade de caracteres incompativel'),
+      body('email')
+        .isEmail()
+        .withMessage('Digite um email com formato válido')
+        .isLength({ min: 10, max: 65 })
+        .withMessage('email com quantidade de caracteres incompativel')
+        .toLowerCase(),
       body('nomeCompleto')
         .isString()
         .withMessage('Campo nome completo é de preenchimento obrigatório')
         .isLength({ min: 5, max: 70 })
-        .withMessage('Quantidade de caracteres incompativel'),
+        .withMessage('Quantidade de caracteres incompativel')
+        .toLowerCase(),
       body('cpf').isString().withMessage('Campo cpf é de preenchimento obrigatório').isLength({ min: 11, max: 15 }).withMessage('cpf com quantidade de caracteres incompativel'),
       body('dataNascimento')
         .isString()
         .withMessage('Campo data nascimento é de preenchimento obrigatório')
         .isLength({ min: 8, max: 25 })
         .withMessage('Quantidade de caracteres incompativel'),
-      body('telefone').isString().withMessage('Campo telefone é de preenchimento obrigatório').isLength({ min: 8, max: 25 }).withMessage('telefone com quantidade de caracteres incompativel'),
+      body('telefone')
+        .isString()
+        .withMessage('Campo telefone é de preenchimento obrigatório')
+        .isLength({ min: 8, max: 25 })
+        .withMessage('telefone com quantidade de caracteres incompativel'),
       body('senha')
         .notEmpty()
         .withMessage('A senha não pode ser vazia')
         .isString()
         .withMessage('Campo senha é de preenchimento obrigatório')
         .isLength({ min: 8, max: 30 })
-        .withMessage('Quantidade de caracteres incompativel'),
+        .withMessage('Quantidade de caracteres incompativel')
+        .toLowerCase(),
       body('confirmarSenha')
         .notEmpty()
         .withMessage('A senha não pode ser vazia')
@@ -36,24 +47,28 @@ class userRegisterValidation {
             throw new Error('As senha digitadas devem ser iguais. Tente novamente.');
           }
           return true;
-        }),
+        })
+        .toLowerCase(),
       body('cep').isString().withMessage('Campo cep é de preenchimento obrigatório').isLength({ min: 8 }).withMessage('CEP. Quantidade de caracteres incompativel'),
       body('endereco')
         .isString()
         .withMessage('Campo endereço é de preenchimento obrigatório')
         .isLength({ min: 9, max: 200 })
-        .withMessage('ENDEREÇO. Quantidade de caracteres incompativel'),
+        .withMessage('ENDEREÇO. Quantidade de caracteres incompativel')
+        .toLowerCase(),
       body('bairro')
         .isString()
         .withMessage('Campo bairro é de preenchimento obrigatório')
         .isLength({ min: 9, max: 45 })
-        .withMessage('BAIRRO. Quantidade de caracteres incompativel'),
+        .withMessage('BAIRRO. Quantidade de caracteres incompativel')
+        .toLowerCase(),
       body('cidade')
         .isString()
         .withMessage('Campo cidade é de preenchimento obrigatório')
         .isLength({ min: 3, max: 45 })
-        .withMessage('CIDADE. Quantidade de caracteres incompativel'),
-      body('uf').isString().withMessage('Campo uf é de preenchimento obrigatório').isLength({ min: 2 }).withMessage('UF. Quantidade de caracteres incompativel'),
+        .withMessage('CIDADE. Quantidade de caracteres incompativel')
+        .toLowerCase(),
+      body('uf').isString().withMessage('Campo uf é de preenchimento obrigatório').isLength({ min: 2 }).withMessage('UF. Quantidade de caracteres incompativel').toLowerCase(),
     ];
   }
 }
