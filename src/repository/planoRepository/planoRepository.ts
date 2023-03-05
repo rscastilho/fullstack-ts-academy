@@ -59,6 +59,20 @@ class planoRepository {
       return error;
     }
   }
+
+  async updatePlano(valor: number, descricao: string, id: number): Promise<iRetorno> {
+    try {
+      const updatePlanoQuery = _planoQueries.updatePlano(valor, descricao, id);
+      const updatePlano: RowDataPacket[] = await connection().promise().query(updatePlanoQuery.query, updatePlanoQuery.fields);
+      if (updatePlano[0].affectedRows > 0) {
+        return { status: 200, message: `Plano ${descricao} atualizado com sucesso!` };
+      } else {
+        return { status: 400, message: 'Plano não encontrado' };
+      }
+    } catch (error: any) {
+      return error;
+    }
+  }
 }
 
 export default new planoRepository();

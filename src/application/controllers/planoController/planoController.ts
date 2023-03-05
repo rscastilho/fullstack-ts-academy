@@ -13,6 +13,7 @@ class planoController {
     this.router.get('/', planoService.getAllPlanos);
     this.router.get('/id', planoService.planoByid);
     this.router.post('/', _planoValidation.planoValidation(), _validation, planoService.addPlano);
+    this.router.patch('/:id', _planoValidation.planoValidation(), _validation, planoService.updatePlano);
     this.router.get('/descricao', planoService.planoByDescricao);
   }
 }

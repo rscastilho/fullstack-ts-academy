@@ -5,9 +5,9 @@ class planoQueries {
     return { query, fields };
   }
 
-  allPlano(){
-    const query = `SELECT * FROM plano`
-    return {query}
+  allPlano() {
+    const query = `SELECT * FROM plano`;
+    return { query };
   }
 
   addPlano(valor: number, descricao: string) {
@@ -18,6 +18,12 @@ class planoQueries {
   planoByDescricao(descricao: string) {
     const query = `select * from plano where ??=?`;
     const fields = ['descricao', descricao];
+    return { query, fields };
+  }
+
+  updatePlano(valor: number, descricao: string, id: number) {
+    const query = `UPDATE plano SET ??=?, ??=? WHERE ??=?`;
+    const fields = ['valor', valor, 'descricao', descricao, 'id', id];
     return { query, fields };
   }
 }

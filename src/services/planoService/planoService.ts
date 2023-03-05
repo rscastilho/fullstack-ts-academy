@@ -44,6 +44,24 @@ class planoService {
       return error;
     }
   }
+
+  async updatePlano(req: Request, res: Response): Promise<Response> {
+    try {
+      const { id } = req.params;
+      let { valor, descricao } = req.body;
+      const pegarPlano = await _planoRepository.planoById(+id);
+      if (pegarPlano.status === 400) {
+        return res.status(pegarPlano.status).json(pegarPlano);
+      } else {
+        valor ? valor : (valor = pegarPlano.data[0].valor);
+        descricao ? descricao : (descricao = pegarPlano.data[0].descicao);
+        const update = await _planoRepository.updatePlano(valor, descricao, +id);
+        return res.status(update.status).json(update);
+      }
+    } catch (error: any) {
+      return error;
+    }
+  }
 }
 
 export default new planoService();
