@@ -23,10 +23,11 @@ class registerService {
       //incluir quantidade de dias para expirar a senha
       dados.senhaExpiraEm = utils.addDias(60);
       dados.avatar = 'avatar.png';
+      dados.dataInicio = utils.hoje();
       //pega a senha e faz o hash
       dados.senha = await _rashPassword.hashPassword(dados.senha);
 
-        const register = await _registerRepository.addUser(
+      const register = await _registerRepository.addUser(
         dados.numeroMatricula,
         dados.email,
         dados.nomeCompleto,

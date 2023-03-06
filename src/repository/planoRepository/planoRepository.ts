@@ -8,10 +8,11 @@ class planoRepository {
     try {
       const planoIdQuery = _planoQueries.planoById(id);
       const planoId = await connection().promise().query(planoIdQuery.query, planoIdQuery.fields);
+      
       if (!planoId[0].length) {
         return { status: 400, message: 'Plano não cadastrado' };
       } else {
-        return { status: 200, data: planoId[0] };
+        return { status: 200, data: planoId[0][0] };
       }
     } catch (error: any) {
       return error;

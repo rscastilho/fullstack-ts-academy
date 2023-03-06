@@ -7,6 +7,7 @@ class planoService {
     try {
       const { id } = req.body;
       const plano = await _planoRepository.planoById(id);
+      
       return res.json(plano);
     } catch (error: any) {
       return error;
