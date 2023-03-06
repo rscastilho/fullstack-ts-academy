@@ -17,7 +17,7 @@ class mensalidadeQueries {
 
   valorQueSeraPago() {
     const query = `select count(user.id) as "qtdeAlunos", sum(plano.valor) as "valorReceber" from user
-	inner join plano on plano.id = user.plano_id
+	  inner join plano on plano.id = user.plano_id
     inner join perfil on perfil.User_id = user.id
     where user.deleted is null or user.deleted < 1 and perfil.funcao_id  <> 1 and perfil.funcao_id  <> 2 `;
     return { query };

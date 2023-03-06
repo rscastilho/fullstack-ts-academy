@@ -11,7 +11,7 @@ class userRepository {
       if (!userById[0].length) {
         return { message: 'Id não encontado', status: 400 };
       } else {
-        return { status: 200, data: userById[0] };
+        return { status: 200, data: userById[0][0] };
       }
     } catch (error: any) {
       return error;
