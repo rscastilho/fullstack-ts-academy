@@ -1,5 +1,5 @@
 # fullstack-ts-academy
-Sistema gerenciamento de academia desenvolvido em TS - nodeJs - ReacJs - Mysql.
+Sistema gerenciamento de academia desenvolvido em nodeJs & ReacJs com Typescript- Mysql.
 
 Back-end utilizando nodeJs com typescript:
   - Estou utilizando o método DDD para desenvolvimento deste projeto, separando da seguinte forma:
