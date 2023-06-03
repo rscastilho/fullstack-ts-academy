@@ -8,7 +8,6 @@ class login {
   async qtdErrorPasswordByUserEmail(email: string) {
     return _loginQueries.errorPasswordByUserEmail(email);
   }
-
 }
 
 export default new login();

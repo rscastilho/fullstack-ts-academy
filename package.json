@@ -1,7 +1,7 @@
 {
   "name": "academy-ts-vite",
   "version": "1.0.0",
-  "description": "",
+  "description": "Sistema gerenciamento de academia desenvolvido em TS - nodeJs - ReacJs - Mysql",
   "main": "index.js",
   "scripts": {
     "dev": "nodemon --exec ts-node ./src/index.ts",

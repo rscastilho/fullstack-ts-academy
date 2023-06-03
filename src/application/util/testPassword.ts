@@ -19,12 +19,18 @@ class testPassword {
         const passwordIsExpired: Date = pegarQuantidadeErros.map((x) => x[0].senhaExpiraEm)[0];
         //se a senha estiver errada e expirada, para por aqui se nao verificar que esta bloqueado e inclui um erro
         if (passwordIsExpired < new Date()) {
-          return { message: `Sua senha expirou em ${passwordIsExpired}`, statusCode: 401 };
+          return {
+            message: `Sua senha expirou em ${passwordIsExpired}`,
+            statusCode: 401,
+          };
         } else if (quantidadeErros === 5 || isBlocked > 0) {
           const bloqueiaUsuarioQuery = await _userRepository.blockUser(true, new Date(), id);
           const bloqueiaUsuario = await connection().promise().query(bloqueiaUsuarioQuery.query, bloqueiaUsuarioQuery.fields);
           if (bloqueiaUsuario[0].affectedRows > 0) {
-            return { message: 'Usuário bloqueado. Contate o administrador do sistema', statusCode: 401 };
+            return {
+              message: 'Usuário bloqueado. Contate o administrador do sistema',
+              statusCode: 401,
+            };
           }
         } else {
           let addQtdErro = quantidadeErros + 1;
@@ -44,7 +50,10 @@ class testPassword {
       const pegarQuantidadeErros: RowDataPacket[] = await connection().promise().query(pegarUser.query, pegarUser.fields);
       const passwordIsExpired: Date = pegarQuantidadeErros.map((x) => x[0].senhaExpiraEm)[0];
       if (passwordIsExpired < new Date()) {
-        return { message: `Sua senha expirou em ${passwordIsExpired}`, statusCode: 401 };
+        return {
+          message: `Sua senha expirou em ${passwordIsExpired}`,
+          statusCode: 401,
+        };
       }
 
       //tudo certo retorna ok para seguir com o login
