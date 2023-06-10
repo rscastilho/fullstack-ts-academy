@@ -8,64 +8,64 @@ import { useNavigate } from "react-router-dom";
 const Register = () => {
   const navigate = useNavigate();
   return (
-    <div className={styles.container}>
+    <div className={styles.containers}>
       <div className={styles.form}>
         <FaRegUser size={"3em"} />
         <span className={styles.tituloLogin}>Registar novo usuário</span>
 
-        <Grid templateColumns="repeat(2, 1fr)" gap={5}>
+        <Grid templateColumns="repeat(2, 1fr)" gap={0.5}>
           <GridItem>
-            <Text size={"sm"}> Nome Completo:</Text>
-            <Input type="text" marginBottom={1} width={"300px"} />
+            <Text fontSize={"sm"}> Nome Completo:</Text>
+            <Input type="text" width={"300px"} size={'sm'} />
           </GridItem>
           <GridItem>
-            <Text size={"sm"}> Email:</Text>
-            <Input type="email" marginBottom={1} width={"300px"} />
-          </GridItem>
-
-          <GridItem>
-            <Text size={"sm"}> CPF:</Text>
-            <Input type="text" marginBottom={1} width={"300px"} />
-          </GridItem>
-          <GridItem>
-            <Text size={"sm"}> Data Nascimento:</Text>
-            <Input type="date" marginBottom={1} width={"300px"} />
-          </GridItem>
-          <GridItem>
-            <Text size={"sm"}> Telefone:</Text>
-            <Input type="tel" marginBottom={1} width={"300px"} />
+            <Text fontSize={'sm'}> Email:</Text>
+            <Input type="email" width={"300px"} size={'sm'} />
           </GridItem>
 
           <GridItem>
-            <Text size={"sm"}> CEP:</Text>
-            <Input type="text" marginBottom={1} width={"300px"} />
+            <Text fontSize={'sm'}> CPF:</Text>
+            <Input type="text" width={"300px"} size={'sm'} />
           </GridItem>
           <GridItem>
-            <Text size={"sm"}> Endereço:</Text>
-            <Input type="text" marginBottom={1} width={"300px"} />
+            <Text fontSize={'sm'}> Data Nascimento:</Text>
+            <Input type="date" width={"300px"} size={'sm'} />
           </GridItem>
           <GridItem>
-            <Text size={"sm"}> Complemento:</Text>
-            <Input type="text" marginBottom={1} width={"300px"} />
+            <Text fontSize={'sm'}> Telefone:</Text>
+            <Input type="tel" width={"300px"} size={'sm'} />
+          </GridItem>
+
+          <GridItem>
+            <Text fontSize={'sm'}> CEP:</Text>
+            <Input type="text" width={"300px"} size={'sm'} />
           </GridItem>
           <GridItem>
-            <Text size={"sm"}> Bairro:</Text>
-            <Input type="text" marginBottom={1} width={"300px"} />
+            <Text fontSize={'sm'}> Endereço:</Text>
+            <Input type="text" width={"300px"} size={'sm'} />
           </GridItem>
           <GridItem>
-            <Text size={"sm"}> Cidade:</Text>
-            <Input type="text" marginBottom={1} width={"300px"} />
+            <Text fontSize={'sm'}> Complemento:</Text>
+            <Input type="text" width={"300px"} size={'sm'} />
           </GridItem>
           <GridItem>
-            <Text size={"sm"}> UF:</Text>
-            <Input type="text" size={"md"} marginBottom={1} width={"300px"} />
+            <Text fontSize={'sm'}> Bairro:</Text>
+            <Input type="text" width={"300px"} size={'sm'} />
           </GridItem>
           <GridItem>
-            <Text size={"sm"}> Plano:</Text>
+            <Text fontSize={'sm'}> Cidade:</Text>
+            <Input type="text" width={"300px"} size={'sm'} />
+          </GridItem>
+          <GridItem>
+            <Text fontSize={'sm'}> UF:</Text>
+            <Input type="text" size={"sm"} width={"300px"} />
+          </GridItem>
+          <GridItem>
+            <Text fontSize={'sm'}> Plano:</Text>
             <Select
               placeholder="Selecione o plano"
               width={"300px"}
-              marginBottom={1}
+                            size={'sm'}
             >
               <option value="option1">Option 1</option>
               <option value="option2">Option 2</option>
@@ -80,18 +80,18 @@ const Register = () => {
             /> */}
           </GridItem>
           <GridItem>
-            <Text size={"sm"}> Senha:</Text>
-            <Input type="password" marginBottom={5} width={"300px"} />
+            <Text fontSize={'sm'}> Senha:</Text>
+            <Input type="password" marginBottom={5} width={"300px"} size={'sm'}/>
           </GridItem>
           <GridItem>
-            <Text size={"sm"}> Confirmar Senha:</Text>
-            <Input type="password" marginBottom={5} width={"300px"} />
+            <Text fontSize={'sm'}> Confirmar Senha:</Text>
+            <Input type="password" marginBottom={5} width={"300px"} size={'sm'}/>
           </GridItem>
         </Grid>
         <Divider marginBottom={"5"} />
         <div className={styles.action}>
           <Button
-            colorScheme="telegram"
+            colorScheme="whatsapp"
             size={"md"}
             marginEnd={3}
             onClick={() => navigate("/")}
@@ -107,7 +107,7 @@ const Register = () => {
             Cancelar
           </Button>
           <Button
-            colorScheme="green"
+            colorScheme="yellow"
             size={"md"}
             marginEnd={3}
             onClick={() => navigate("/login")}
