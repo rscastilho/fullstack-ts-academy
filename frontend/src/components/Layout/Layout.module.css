@@ -1,0 +1,35 @@
+.nav {
+  min-height: 8vh;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
+  background-color: green;
+}
+.menu {
+  border-top: 0.5px solid white;
+  background-color: brown;
+  min-height: 3vh;
+}
+
+.bodyPage {
+  height: calc(100vh - (14.6vh));
+  max-width: 95vw;
+  /* background-color: rgb(236, 236, 234); */
+  margin: 2px auto 2px;
+  border-radius: 5px;
+  overflow-y: auto;
+  border: 1px solid black;
+  padding: 10px;
+}
+
+.footer {
+  min-height: 3vh;
+  background-color: green;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
+  font-size: 0.8em;
+}
