@@ -12,12 +12,11 @@ Para acesso e transações com o banco de dados, não vou utilizar nenhum ORM, t
 
 
 Front-end utilizando ReactJS com typescript compilado em Vite:
-    
       - Chackra UI como Lib CSS;
       - CSS module nas principais configurações CSS;
       - Axios para comunicação com API/backEnd;
       - React-router-dom para roteamento entre as páginas;
-       - React-icons para icones do App;
+      - React-icons para icones do App;
 
 
     
