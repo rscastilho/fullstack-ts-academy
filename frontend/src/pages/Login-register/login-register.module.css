@@ -35,3 +35,8 @@
     box-shadow: -1px 1px 30px #c3c3c3;
     
 }
+
+.action{
+    display: flex;
+    justify-content: center;
+}

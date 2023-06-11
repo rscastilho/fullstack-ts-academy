@@ -1,5 +1,5 @@
 import appApi from "./appApi";
-import { iLogar, iLogin } from "../interfaces/iLogin";
+import { iLogar} from "../interfaces/iLogin";
 import { AxiosResponse } from "axios";
 
 const LoginApi = async (data: iLogar) => {
