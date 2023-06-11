@@ -17,7 +17,7 @@ Front-end utilizando ReactJS com typescript compilado em Vite:
       - Axios para comunicação com API/backEnd;
       - React-router-dom para roteamento entre as páginas;
       - React-icons para icones do App;
-
+      
 
     
 
