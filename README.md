@@ -10,8 +10,7 @@ Back-end utilizando nodeJs com typescript:
       - Application;
 Para acesso e transações com o banco de dados, não vou utilizar nenhum ORM, todas as queries estão armazenadas na pasta queries;
 
-
-Front-end utilizando ReactJS com typescript compilado em Vite:
+  - Front-end utilizando ReactJS com typescript compilado em Vite:
       - Chackra UI como Lib CSS;
       - CSS module nas principais configurações CSS;
       - Axios para comunicação com API/backEnd;
