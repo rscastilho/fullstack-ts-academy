@@ -4,9 +4,11 @@ import { Text, Button, Select, Grid, GridItem } from "@chakra-ui/react";
 import { Input } from "@chakra-ui/react";
 import { Divider } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
-import { useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { useEffect } from "react";
 import { iRegister } from "../../interfaces/iRegister";
+import PlanoApi from "../../api/PlanoApi";
+import { iPlano } from "../../interfaces/iPlano";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -14,7 +16,7 @@ const Register = () => {
   const [email, setEmail] = useState<string>();
   const [nomeCompleto, setNomeCompleto] = useState<string>();
   const [cpf, setCpf] = useState<string>();
-  const [dataNascimento, setDataNascimento] = useState<Date>();
+  const [dataNascimento, setDataNascimento] = useState<string>();
   const [telefone, setTelefone] = useState<string>();
   const [senha, setSenha] = useState<string>();
   const [confirmarSenha, setConfirmarSenha] = useState<string>();
@@ -26,6 +28,9 @@ const Register = () => {
   const [uf, setUf] = useState<string>();
   const [dataInicio, setDataInicio] = useState<Date>();
   const [planoId, setPlanoId] = useState<number>();
+  const [listaPlanos, setListaPlanos] = useState<string[]>();
+
+
 
   const data: iRegister = {
     email,
@@ -44,6 +49,20 @@ const Register = () => {
     dataInicio,
     planoId,
   };
+
+  const carregarPlanos = async () => {
+    try {
+      const result = await PlanoApi();
+      setListaPlanos(result.data);
+      return;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useMemo(() => {
+    carregarPlanos();
+  }, []);
 
   useEffect(() => {
     nomeCompletoRef.current?.focus();
@@ -77,6 +96,7 @@ const Register = () => {
                 borderRadius={"md"}
                 value={email}
                 isRequired
+                readOnly
               />
             </GridItem>
 
@@ -98,7 +118,7 @@ const Register = () => {
                 width={"300px"}
                 size={"sm"}
                 borderRadius={"md"}
-                value={"01/01/2001"}
+                value={dataNascimento}
                 isRequired
               />
             </GridItem>
@@ -174,15 +194,23 @@ const Register = () => {
             </GridItem>
             <GridItem>
               <Text fontSize={"sm"}> Plano:</Text>
-              <Select
-                placeholder="Selecione o plano"
-                width={"300px"}
-                size={"sm"}
-              >
-                <option value="option1">Option 1</option>
-                <option value="option2">Option 2</option>
-                <option value="option3">Option 3</option>
-              </Select>
+              
+              <div>
+                <Select
+                  placeholder="Selecione o plano"
+                  width={"300px"}
+                  size={"sm"}
+                  onChange={(e) => setPlanoId(+e.target.value)}
+                  defaultValue={''}
+                >
+                  <option defaultValue={"Selecione o plano"} value={0}></option>
+                  {listaPlanos && listaPlanos?.map((plano: any, i) => (
+                    <option key={i} value={+plano.id}>
+                      {plano.descricao}
+                    </option>
+                  ))}
+                </Select>
+              </div>
               {/* <Input
               type="date"
               size={"md"}

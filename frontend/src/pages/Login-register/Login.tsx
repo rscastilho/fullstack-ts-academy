@@ -106,6 +106,7 @@ const Login = () => {
                 ref={emailRef}
                 required
                 placeholder="seuemail@email.com"
+                readOnly
               />
             </div>
             <div>
@@ -138,7 +139,7 @@ const Login = () => {
                 size={"sm"}
                 marginEnd={3}
                 onClick={handleCancelar}
-                isDisabled={!email || !senha}
+                // isDisabled={!email || !senha}
               >
                 Cancelar
               </Button>

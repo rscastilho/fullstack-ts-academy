@@ -4,22 +4,25 @@
   justify-content: space-between;
   align-items: center;
   flex-direction: row;
-  background-color: green;
+  background-color: rgb(194, 192, 192);
 }
 .menu {
   border-top: 0.5px solid white;
-  background-color: brown;
+  background-color: rgb(116, 30, 30);
   min-height: 3vh;
+  color: white;
+  font-size: .91em;
 }
 
 .bodyPage {
   height: calc(100vh - (14.9vh));
   max-width: 95vw;
+  background-color: white;
   /* background-color: rgb(236, 236, 234); */
   margin: 2px auto 2px;
   border-radius: 5px;
   overflow-y: auto;
-  border: 1px solid black;
+  /* border: 1px solid black; */
   padding: 10px;
 }
 

@@ -6,13 +6,13 @@ import { BrowserRouter } from "react-router-dom";
 
 function App() {
   return (
-    <>
+    <div className={'principal'}>
       <BrowserRouter>
       <Header />
         <Bodypage />
       <Footer />
       </BrowserRouter>
-    </>
+    </div>
   );
 }
 

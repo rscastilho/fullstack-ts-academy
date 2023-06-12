@@ -2,7 +2,7 @@ export interface iRegister {
   email?: string;
   nomeCompleto?: string;
   cpf?: string;
-  dataNascimento: Date | undefined;
+  dataNascimento?: string;
   telefone?: string;
   senha?: string;
   confirmarSenha?: string;
@@ -13,5 +13,5 @@ export interface iRegister {
   cidade?: string;
   uf?: string;
   dataInicio: Date | undefined;
-  planoId: number | undefined;
+  planoId:  number | undefined;
 }

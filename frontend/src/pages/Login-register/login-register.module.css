@@ -4,6 +4,7 @@
     justify-content: center;
     flex-direction: column;
     margin-top: 5%;
+    flex-wrap: wrap;
            
 }
 .containers{
@@ -33,6 +34,7 @@
     border-radius: 20px;
     width: 50%;
     box-shadow: -1px 1px 30px #c3c3c3;
+    width: inherit;
     
 }
 
