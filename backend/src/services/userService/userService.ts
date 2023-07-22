@@ -5,6 +5,7 @@ import { RowDataPacket } from 'mysql2';
 import { StatusCodes } from 'http-status-codes';
 import fs from 'fs';
 import { iRetorno } from './../../interfaces/iRetorno';
+import { log } from 'console';
 
 class userService {
   async addAvatar(req: Request, res: Response): Promise<Response> {

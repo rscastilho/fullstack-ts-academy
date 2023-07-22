@@ -13,5 +13,6 @@ export interface iRegister {
   cidade?: string;
   uf?: string;
   dataInicio: Date | undefined;
-  planoId:  number | undefined;
+  planoId: number | undefined;
+  blocked?: boolean;
 }

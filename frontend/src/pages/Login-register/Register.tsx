@@ -30,8 +30,6 @@ const Register = () => {
   const [planoId, setPlanoId] = useState<number>();
   const [listaPlanos, setListaPlanos] = useState<string[]>();
 
-
-
   const data: iRegister = {
     email,
     nomeCompleto,
@@ -194,21 +192,22 @@ const Register = () => {
             </GridItem>
             <GridItem>
               <Text fontSize={"sm"}> Plano:</Text>
-              
+
               <div>
                 <Select
                   placeholder="Selecione o plano"
                   width={"300px"}
                   size={"sm"}
                   onChange={(e) => setPlanoId(+e.target.value)}
-                  defaultValue={''}
+                  defaultValue={""}
                 >
                   <option defaultValue={"Selecione o plano"} value={0}></option>
-                  {listaPlanos && listaPlanos?.map((plano: any, i) => (
-                    <option key={i} value={+plano.id}>
-                      {plano.descricao}
-                    </option>
-                  ))}
+                  {listaPlanos &&
+                    listaPlanos?.map((plano: any, i) => (
+                      <option key={i} value={+plano.id}>
+                        {plano.descricao}
+                      </option>
+                    ))}
                 </Select>
               </div>
               {/* <Input

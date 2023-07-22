@@ -4,7 +4,7 @@ import styles from "./Layout.module.css";
 const Bodypage = () => {
   return (
     <div className={styles.bodyPage}>
-    <AppRouter/>
+      <AppRouter />
     </div>
   );
 };

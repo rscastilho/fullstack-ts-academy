@@ -1,3 +1,5 @@
+import { useContext } from "react";
+import { Authcontext } from "../../Context/Context";
 import styles from "./login-register.module.css";
 import { useNavigate } from "react-router-dom";
 import { FaRegUser } from "react-icons/fa";
@@ -7,15 +9,18 @@ import { AxiosResponse } from "axios";
 import { iLogar, iLogin } from "../../interfaces/iLogin";
 import Spinner from "../../components/Spinner/Spinner";
 import LoginApi from "../../api/LoginApi";
+import appApi from "../../api/appApi";
 
 const Login = () => {
   const navigate = useNavigate();
-  const [email, setEmail] = useState<string>();
+  const [email, setEmail] = useState<string>("");
   const [senha, setSenha] = useState<string>("");
   const [, setResultado] = useState<AxiosResponse<iLogin>[]>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const emailRef = useRef<HTMLInputElement>(null);
   const toast = useToast();
+
+  const { state, setState } = useContext(Authcontext);
 
   const data: iLogar = {
     email,
@@ -23,7 +28,7 @@ const Login = () => {
   };
 
   const handleLogin = async (
-    e: React.FormEvent<HTMLFormElement>
+    e: React.FormEvent<HTMLFormElement>,
   ): Promise<void> => {
     e.preventDefault();
     setIsLoading(true);
@@ -52,16 +57,20 @@ const Login = () => {
       } else {
         setResultado(result);
         localStorage.setItem("@token", JSON.stringify(result.token));
+        // console.log(localStorage.getItem("@token"));
+        appApi.defaults.headers.authorization = `bearer ${result.token}`;
         toast({
           description: result.message.toString(),
           isClosable: true,
           status: "success",
           duration: 2000,
         });
-        navigate("/");
+        navigate("/administracao");
+        setState(true);
       }
       // eslint-disable-next-line
     } catch (error: any) {
+      setState(false);
       toast({
         description: error.toString(),
         isClosable: true,
@@ -79,10 +88,12 @@ const Login = () => {
     setEmail("");
     setSenha("");
     navigate("/");
+    setState(false);
   };
 
   useEffect(() => {
     emailRef.current?.focus();
+    console.log(state);
   }, []);
 
   return (
@@ -106,7 +117,6 @@ const Login = () => {
                 ref={emailRef}
                 required
                 placeholder="seuemail@email.com"
-                readOnly
               />
             </div>
             <div>
