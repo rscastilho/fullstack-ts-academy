@@ -1,16 +1,21 @@
 import styles from "./Layout.module.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { Authcontext } from "../../Context/Context";
 import appApi from "../../api/appApi";
 
+
 const Header = () => {
   const { state, setState } = useContext(Authcontext);
+  const navigate = useNavigate()
+  
 
   const logout = () => {
-    setState(false);
+    setState({logado: false});
     localStorage.removeItem("@token");
     appApi.defaults.headers.delete.authorization = ``;
+    navigate('/') 
+    
     console.log(state);
     
   };
@@ -22,7 +27,7 @@ const Header = () => {
           <Link to={"/"}>Home</Link>
         </div>
         <div>
-          {state ? (
+          {state.logado ? (
             <button onClick={logout}>Logout</button>
           ) : (
             <Link to={"/login"}>Login</Link>

@@ -66,11 +66,11 @@ const Login = () => {
           duration: 2000,
         });
         navigate("/administracao");
-        setState(true);
+        setState({logado: true});
       }
       // eslint-disable-next-line
     } catch (error: any) {
-      setState(false);
+      setState({logado: false});
       toast({
         description: error.toString(),
         isClosable: true,
@@ -88,12 +88,11 @@ const Login = () => {
     setEmail("");
     setSenha("");
     navigate("/");
-    setState(false);
+    setState({logado: false});
   };
 
   useEffect(() => {
     emailRef.current?.focus();
-    console.log(state);
   }, []);
 
   return (

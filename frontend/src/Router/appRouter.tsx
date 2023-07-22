@@ -20,11 +20,11 @@ const AppRouter = () => {
         <Route path="/register" element={<Register />} />
         <Route
           path="/administracao"
-          element={state ? <Administracao /> : <Navigate to={"/"} />}
+          element={state.logado ? <Administracao /> : <Navigate to={"/"} />}
         />
         <Route
           path="/usuarios"
-          element={state ? <Usuarios /> : <UsuarioNaoLogado />}
+          element={state.logado ? <Usuarios /> : <UsuarioNaoLogado />}
         />
         <Route path="*" element={<Notfound />} />
       </Routes>
