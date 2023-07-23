@@ -28,12 +28,13 @@ const Login = () => {
   };
 
   const handleLogin = async (
-    e: React.FormEvent<HTMLFormElement>,
+    e: React.FormEvent<HTMLFormElement>
   ): Promise<void> => {
     e.preventDefault();
     setIsLoading(true);
     try {
       const result = await LoginApi(data);
+
       if (result.message[0].includes("formato válido")) {
         toast({
           description: result.message.toString(),
@@ -43,8 +44,6 @@ const Login = () => {
           position: "top-right",
         });
         return;
-        console.log(state);
-        
       }
 
       if (result.status === 400) {
@@ -56,10 +55,10 @@ const Login = () => {
           position: "top-right",
         });
         return;
-      } else {
+      } else if (result.message.includes("Bem vindo")) {
         setResultado(result);
         localStorage.setItem("@token", result.token);
-        setState({logado: true});
+        setState({ logado: true });
         // console.log(localStorage.getItem("@token"));
         //  appApi.defaults.headers.authorization = `bearer ${result.token}`;
         toast({
@@ -69,12 +68,19 @@ const Login = () => {
           duration: 2000,
         });
         navigate("/administracao");
-        console.log('loginRealizado', localStorage);
-        
+        console.log("loginRealizado", localStorage);
+      } else {
+        toast({
+          description: result.message.toString(),
+          isClosable: true,
+          status: "warning",
+          duration: 2000,
+        });
+        return
       }
       // eslint-disable-next-line
     } catch (error: any) {
-      setState({logado: false});
+      setState({ logado: false });
       toast({
         description: error.toString(),
         isClosable: true,
@@ -92,7 +98,7 @@ const Login = () => {
     setEmail("");
     setSenha("");
     navigate("/");
-    setState({logado: false});
+    setState({ logado: false });
   };
 
   useEffect(() => {

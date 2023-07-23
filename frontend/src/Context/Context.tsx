@@ -36,7 +36,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     const pegaToken = localStorage.getItem("@token");
-    if (pegaToken) {
+    if (pegaToken && pegaToken !== undefined) {
       validarPerfil(JSON.stringify(pegaToken));
       pegaToken && setState({ logado: true });
       appApi.defaults.headers.authorization = `bearer ${pegaToken}`;
