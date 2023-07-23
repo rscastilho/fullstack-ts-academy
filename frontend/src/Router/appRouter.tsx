@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route} from "react-router-dom";
 import Notfound from "../pages/NotFound/Notfound";
 import Principal from "../pages/Principal/Principal";
 import Login from "../pages/Login-register/Login";
@@ -10,7 +10,7 @@ import { Authcontext } from "../Context/Context";
 import UsuarioNaoLogado from "../components/UsuarioNaoLogado/UsuarioNaoLogado";
 
 const AppRouter = () => {
-  const { state } = useContext(Authcontext);
+  const { state,perfil } = useContext(Authcontext);
 
   return (
     <>
@@ -20,11 +20,11 @@ const AppRouter = () => {
         <Route path="/register" element={<Register />} />
         <Route
           path="/administracao"
-          element={state.logado ? <Administracao /> : <Navigate to={"/"} />}
+          element={state.logado && perfil === "Administrador"  ? <Administracao /> : <UsuarioNaoLogado />}
         />
         <Route
           path="/usuarios"
-          element={state.logado ? <Usuarios /> : <UsuarioNaoLogado />}
+          element={state.logado && perfil === "Administrador" ? <Usuarios /> : <UsuarioNaoLogado />}
         />
         <Route path="*" element={<Notfound />} />
       </Routes>

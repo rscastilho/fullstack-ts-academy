@@ -11,12 +11,12 @@ const Header = () => {
   
 
   const logout = () => {
-    setState({logado: false});
     localStorage.removeItem("@token");
-    appApi.defaults.headers.delete.authorization = ``;
+    setState({logado: false});
+    appApi.defaults.headers.delete.authorization = null;
     navigate('/') 
     
-    console.log(state);
+    console.log('logout realizado', localStorage);
     
   };
   return (

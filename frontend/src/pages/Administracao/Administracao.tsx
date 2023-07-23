@@ -18,10 +18,10 @@ const Administracao = () => {
   return (
     <div>
       {contentAdministration.map((contents: content, i: number) => (
-        <>
+        <div key={i}>
           <Link to={contents.link}>{contents.titulo}</Link>
-          <p key={i}>{contents.descricao}</p>
-        </>
+          <p>{contents.descricao}</p>
+        </div>
       ))}
     </div>
   );

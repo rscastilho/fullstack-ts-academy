@@ -9,7 +9,7 @@ import { AxiosResponse } from "axios";
 import { iLogar, iLogin } from "../../interfaces/iLogin";
 import Spinner from "../../components/Spinner/Spinner";
 import LoginApi from "../../api/LoginApi";
-import appApi from "../../api/appApi";
+// import appApi from "../../api/appApi";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -43,6 +43,8 @@ const Login = () => {
           position: "top-right",
         });
         return;
+        console.log(state);
+        
       }
 
       if (result.status === 400) {
@@ -56,9 +58,10 @@ const Login = () => {
         return;
       } else {
         setResultado(result);
-        localStorage.setItem("@token", JSON.stringify(result.token));
+        localStorage.setItem("@token", result.token);
+        setState({logado: true});
         // console.log(localStorage.getItem("@token"));
-        appApi.defaults.headers.authorization = `bearer ${result.token}`;
+        //  appApi.defaults.headers.authorization = `bearer ${result.token}`;
         toast({
           description: result.message.toString(),
           isClosable: true,
@@ -66,7 +69,8 @@ const Login = () => {
           duration: 2000,
         });
         navigate("/administracao");
-        setState({logado: true});
+        console.log('loginRealizado', localStorage);
+        
       }
       // eslint-disable-next-line
     } catch (error: any) {
