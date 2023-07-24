@@ -68,7 +68,7 @@ const Login = () => {
           duration: 2000,
         });
         navigate("/administracao");
-        console.log("loginRealizado", localStorage);
+        console.log("loginRealizado");
       } else {
         toast({
           description: result.message.toString(),

@@ -6,4 +6,6 @@ export interface iPlano {
     valor: number;
     descricao: string;
   };
+  valor: number;
+  descricao: string;
 }

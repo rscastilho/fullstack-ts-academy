@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
-import UsuariosApi from "../../api/UsuariosApi";
-import { iRegister } from "./../../interfaces/iRegister";
+import UsuariosApi from "../../../api/UsuariosApi";
+import { iRegister } from "../../../interfaces/iRegister";
 import { Link, Navigate } from "react-router-dom";
 import {
   Table,
@@ -14,12 +14,12 @@ import {
   TableContainer,
 } from "@chakra-ui/react";
 import { useContext } from "react";
-import { Authcontext } from "../../Context/Context";
+import { Authcontext } from "../../../Context/Context";
 
 const Usuarios = () => {
   const [user, setUser] = useState<iRegister[]>();
   const [registros, setRegistros] = useState();
-  const { state,  } = useContext(Authcontext);
+  const { state } = useContext(Authcontext);
 
   const getAllUser = async () => {
     try {
@@ -51,7 +51,7 @@ const Usuarios = () => {
               </Tr>
             </Thead>
             <Tbody>
-              {user?.map((userList: iRegister,i: number) => (
+              {user?.map((userList: iRegister, i: number) => (
                 <tr key={i}>
                   <Td>{userList.nomeCompleto}</Td>
                   <Td>{userList.cpf}</Td>

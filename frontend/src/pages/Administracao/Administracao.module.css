@@ -1,0 +1,24 @@
+.contentItens {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.item {
+  border: 1px solid black;
+  padding: 1em;
+  border-radius: 10px;
+  margin: 0.5em;
+  background-color: #f0f0f0;
+  min-width: 15em;
+}
+
+.item,
+Link {
+  color:#505050;
+}
+.item p {
+  color: rgb(21, 21, 190);
+  font-weight: 500;
+}

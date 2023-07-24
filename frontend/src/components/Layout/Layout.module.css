@@ -4,15 +4,30 @@
   justify-content: space-between;
   align-items: center;
   flex-direction: row;
-  background-color: rgb(194, 192, 192);
+  background-color: rgb(73, 75, 196);
+  
 }
 .menu {
   border-top: 0.5px solid white;
-  background-color: rgb(116, 30, 30);
+  /* background-color: rgb(116, 30, 30); */
+  background-color: rgb(133, 79, 138);
   min-height: 3vh;
   color: white;
   font-size: .91em;
+  display: flex;
+  align-items: center;
+    
 }
+
+.menu span{
+  margin:  0em .5em;
+}
+
+.login{
+  margin-right: 2em;
+  color: white;
+  }
+
 
 .bodyPage {
   height: calc(100vh - (14.9vh));
@@ -28,7 +43,8 @@
 
 .footer {
   min-height: 3vh;
-  background-color: green;
+  /* background-color: green; */
+  background-color: rgb(133, 79, 138);
 
   display: flex;
   justify-content: space-between;
