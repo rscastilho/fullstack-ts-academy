@@ -4,6 +4,7 @@ import { useContext, useMemo, useState } from 'react';
 import { Authcontext } from '../../../Context/Context';
 import PlanoApi from '../../../api/PlanoApi';
 import { iPlano } from '../../../interfaces/iPlano';
+import { changeCurrency } from '../../../Utils/utils';
 
 const Planos = () => {
   const { state } = useContext(Authcontext);
@@ -17,7 +18,6 @@ const Planos = () => {
       setPlanos(result.data);
     } catch (error) {
       console.log(error);
-
       return error;
     }
   };
@@ -26,8 +26,6 @@ const Planos = () => {
     getAllPlanos();
   }, []);
 
-
-  
   return (
     <div>
       {state ? (
@@ -36,25 +34,29 @@ const Planos = () => {
             <TableCaption>Imperial to metric conversion factors</TableCaption>
             <Thead>
               <Tr>
-                <Th>Descrição</Th>
-                <Th>Valor</Th>
+                <>
+                  <Th>{'Descricao'}</Th>
+                  <Th>{'Valor'}</Th>
+                </>
+
                 <Th></Th>
               </Tr>
             </Thead>
             <Tbody>
-              {planos?.map((planosList: iPlano, i: number) => (
-                <tr key={i}>
-                  <Td>{planosList.descricao}</Td>
-                  <Td>{planosList.valor}</Td>
-                  <Td></Td>
-                  <td>
-                    <button>Editar</button>
-                  </td>
-                  <td>
-                    <button>Excluir</button>
-                  </td>
-                </tr>
-              ))}
+              {planos &&
+                planos.map((planosList: iPlano, i: number) => (
+                  <tr key={i}>
+                    <Td>{planosList.descricao}</Td>
+                    <Td>{changeCurrency(planosList.valor)}</Td>
+                    <Td></Td>
+                    <td>
+                      <button>Editar</button>
+                    </td>
+                    <td>
+                      <button>Excluir</button>
+                    </td>
+                  </tr>
+                ))}
             </Tbody>
             <Tfoot>
               <Tr>

@@ -1,25 +1,19 @@
-import { useMemo, useState } from "react";
-import UsuariosApi from "../../../api/UsuariosApi";
-import { iRegister } from "../../../interfaces/iRegister";
-import { Link, Navigate } from "react-router-dom";
-import {
-  Table,
-  Thead,
-  Tbody,
-  Tfoot,
-  Tr,
-  Th,
-  Td,
-  TableCaption,
-  TableContainer,
-} from "@chakra-ui/react";
-import { useContext } from "react";
-import { Authcontext } from "../../../Context/Context";
+import { useMemo, useState } from 'react';
+import UsuariosApi from '../../../api/UsuariosApi';
+import { iRegister } from '../../../interfaces/iRegister';
+import { Link, Navigate } from 'react-router-dom';
+import { Table, Thead, Tbody, Tfoot, Tr, Th, Td, TableCaption, TableContainer, useDisclosure } from '@chakra-ui/react';
+import { useContext } from 'react';
+import { Authcontext } from '../../../Context/Context';
+import Botao from './../../../components/Botao/Botao';
+import ModalRef from './../../../components/Modal/Modal';
+import AddUsuario from '../AddUsuario/AddUsuario';
 
 const Usuarios = () => {
   const [user, setUser] = useState<iRegister[]>();
   const [registros, setRegistros] = useState();
   const { state } = useContext(Authcontext);
+  const { onOpen, isOpen, onClose} = useDisclosure()
 
   const getAllUser = async () => {
     try {
@@ -37,17 +31,19 @@ const Usuarios = () => {
     getAllUser();
   }, []);
 
+
   return (
     <div>
       {user || state ? (
         <TableContainer>
-          <Table variant="striped" colorScheme="facebook" size={"sm"}>
+          <Botao color={'whatsapp'} size={'sm'} textoBotao={'Novo usuário'} funcao={onOpen}  alinhamento={'end'}/>
+          <Table variant="striped" colorScheme="facebook" size={'sm'}>
             <TableCaption>Imperial to metric conversion factors</TableCaption>
             <Thead>
               <Tr>
-                <Th>Nome Completo</Th>
-                <Th>CPF</Th>
-                <Th>Bloqueado</Th>
+                <Th textAlign={'center'}>Nome Completo</Th>
+                <Th textAlign={'center'}>CPF</Th>
+                <Th textAlign={'center'}>Bloqueado</Th>
               </Tr>
             </Thead>
             <Tbody>
@@ -55,7 +51,7 @@ const Usuarios = () => {
                 <tr key={i}>
                   <Td>{userList.nomeCompleto}</Td>
                   <Td>{userList.cpf}</Td>
-                  <Td>{userList.blocked ? "Sim" : "Não"}</Td>
+                  <Td>{userList.blocked ? 'Sim' : 'Não'}</Td>
                   <td>
                     <button>Editar</button>
                   </td>
@@ -76,13 +72,17 @@ const Usuarios = () => {
           </Table>
         </TableContainer>
       ) : (
-        <Navigate to={"/"} />
+        <Navigate to={'/'} />
 
         // <p>Usuário não logado no sistema</p>
       )}
-      <Link to={"/administracao"}>
+      <Link to={'/administracao'}>
         <button>Voltar</button>
       </Link>
+
+      <ModalRef titulo={'Cadastrar novo usuário'} isOp={isOpen} onCl={onClose}>
+        <AddUsuario/>
+      </ModalRef>
     </div>
   );
 };

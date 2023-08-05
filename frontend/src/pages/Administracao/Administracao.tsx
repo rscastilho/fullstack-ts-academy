@@ -21,12 +21,17 @@ const contentAdministration: content[] = [
 ];
 
 const Administracao = () => {
+
+  
+
+
   return (
     <div className={styles.contentItens}>
       {contentAdministration.map((contents: content, i: number) => (
         <div key={i} className={styles.item}>
           <Link to={contents.link}>{contents.titulo}</Link>
           <p>{contents.descricao}</p>
+          
         </div>
       ))}
     </div>
