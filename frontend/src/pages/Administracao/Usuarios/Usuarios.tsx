@@ -36,6 +36,7 @@ const Usuarios = () => {
     getAllUser();
   }, []);
 
+
   return (
     <div>
       {user || state ? (
@@ -44,6 +45,9 @@ const Usuarios = () => {
             <TableCaption> {registros && `${registros} registros encontrados`} </TableCaption>
             <Thead>
               <Tr>
+                <Th textAlign={'center'}>Nome Completo</Th>
+                <Th textAlign={'center'}>CPF</Th>
+                <Th textAlign={'center'}>Bloqueado</Th>
                 <Th textAlign={'center'}>Nome Completo</Th>
                 <Th textAlign={'center'}>CPF</Th>
                 <Th textAlign={'center'}>Bloqueado</Th>
@@ -79,12 +83,18 @@ const Usuarios = () => {
         </TableContainer>
       ) : (
         <Navigate to={'/'} />
+        <Navigate to={'/'} />
 
         // <p>Usuário não logado no sistema</p>
       )}
       <Link to={'/administracao'}>
+      <Link to={'/administracao'}>
         <button>Voltar</button>
       </Link>
+
+      <ModalRef titulo={'Cadastrar novo usuário'} isOp={isOpen} onCl={onClose}>
+        <AddUsuario/>
+      </ModalRef>
     </div>
   );
 };
