@@ -21,7 +21,9 @@ const Header = () => {
   return (
     <>
       <nav className={styles.nav}>
-        <div>1</div>
+        <div>
+        <Link to={"/presenca"}>Presença</Link>
+        </div>
         <div>
           <Link to={"/"}>Home</Link>
         </div>

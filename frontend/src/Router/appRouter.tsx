@@ -9,6 +9,7 @@ import { useContext } from "react";
 import { Authcontext } from "../Context/Context";
 import UsuarioNaoLogado from "../components/UsuarioNaoLogado/UsuarioNaoLogado";
 import Planos from "./../pages/Administracao/Planos/Planos";
+import Presenca from "../pages/Presenca/Presenca";
 
 const AppRouter = () => {
   const { state, perfil } = useContext(Authcontext);
@@ -19,6 +20,7 @@ const AppRouter = () => {
         <Route path="/" element={<Principal />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/presenca" element={<Presenca/>} />
         <Route
           path="/administracao"
           element={

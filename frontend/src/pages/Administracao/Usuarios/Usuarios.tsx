@@ -1,19 +1,25 @@
 import { useMemo, useState } from 'react';
 import UsuariosApi from '../../../api/UsuariosApi';
-import { iRegister } from '../../../interfaces/iRegister';
 import { Link, Navigate } from 'react-router-dom';
 import { Table, Thead, Tbody, Tfoot, Tr, Th, Td, TableCaption, TableContainer, useDisclosure } from '@chakra-ui/react';
-import { useContext } from 'react';
+import React, { useContext } from 'react';
 import { Authcontext } from '../../../Context/Context';
-import Botao from './../../../components/Botao/Botao';
 import ModalRef from './../../../components/Modal/Modal';
 import AddUsuario from '../AddUsuario/AddUsuario';
+import { iUser } from '../../../interfaces/iUser';
+import AltertRef from '../../../components/Alert/Altert';
+import Botao from '../../../components/Botao/Botao';
+import { user } from './../../../../../backend/src/interfaces/user';
+import styles from './Usuarios.module.css'
+
+// type modalState = boolean;
+// type setModalState = React.Dispatch<React.SetStateAction<modalState>>;
 
 const Usuarios = () => {
-  const [user, setUser] = useState<iRegister[]>();
+  const [user, setUser] = useState<iUser[]>();
   const [registros, setRegistros] = useState();
   const { state } = useContext(Authcontext);
-  const { onOpen, isOpen, onClose} = useDisclosure()
+  const { onOpen, isOpen, onClose } = useDisclosure();
 
   const getAllUser = async () => {
     try {
@@ -22,7 +28,6 @@ const Usuarios = () => {
       setUser(result.data);
     } catch (error) {
       console.log(error);
-
       return error;
     }
   };
@@ -31,14 +36,12 @@ const Usuarios = () => {
     getAllUser();
   }, []);
 
-
   return (
     <div>
       {user || state ? (
         <TableContainer>
-          <Botao color={'whatsapp'} size={'sm'} textoBotao={'Novo usuário'} funcao={onOpen}  alinhamento={'end'}/>
           <Table variant="striped" colorScheme="facebook" size={'sm'}>
-            <TableCaption>Imperial to metric conversion factors</TableCaption>
+            <TableCaption> {registros && `${registros} registros encontrados`} </TableCaption>
             <Thead>
               <Tr>
                 <Th textAlign={'center'}>Nome Completo</Th>
@@ -47,24 +50,27 @@ const Usuarios = () => {
               </Tr>
             </Thead>
             <Tbody>
-              {user?.map((userList: iRegister, i: number) => (
+              {user?.map((userList: iUser, i: number) => (
                 <tr key={i}>
                   <Td>{userList.nomeCompleto}</Td>
-                  <Td>{userList.cpf}</Td>
-                  <Td>{userList.blocked ? 'Sim' : 'Não'}</Td>
-                  <td>
-                    <button>Editar</button>
-                  </td>
-                  <td>
-                    <button>Excluir</button>
-                  </td>
+                  <Td textAlign={'center'}>{userList.cpf}</Td>
+                  <Td textAlign={'center'}>{userList.blocked ? 'Sim' : 'Não'}</Td>
+                  <Td textAlign={'right'}>
+                    {/* <Botao color={'teal'} size={'sm'} textoBotao={'Editar'} funcao={onOpen} alinhamento={'end'} id={userList.id} /> */}
+                    <ModalRef titulo={'Atualizar usuário'} isOp={isOpen} onClose={onClose} nomeCompleto={userList.nomeCompleto} user={userList}>
+                      {/* <AddUsuario/> */}
+                    </ModalRef>
+                  </Td>
+                  <Td textAlign={'left'}>
+                    <AltertRef nomeCompleto={userList.nomeCompleto}/>
+                  </Td>
                 </tr>
               ))}
             </Tbody>
             <Tfoot>
               <Tr>
-                <Th isNumeric> {registros} Encontrados</Th>
-                <Th isNumeric></Th>
+                <Th> </Th>
+                <Th></Th>
                 <Th> -- Paginação -- </Th>
                 <Th></Th>
               </Tr>
@@ -79,10 +85,6 @@ const Usuarios = () => {
       <Link to={'/administracao'}>
         <button>Voltar</button>
       </Link>
-
-      <ModalRef titulo={'Cadastrar novo usuário'} isOp={isOpen} onCl={onClose}>
-        <AddUsuario/>
-      </ModalRef>
     </div>
   );
 };
