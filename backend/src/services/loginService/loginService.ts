@@ -12,8 +12,6 @@ class login {
   async login(req: Request, res: Response): Promise<Response | iRetorno | any> {
     try {
       const userByEmail = await _userRepository.userByEmail(req.body.email);
-  console.log('userbyemail',userByEmail)
-
       
         if (userByEmail.status === 400) {
           return res.status(userByEmail.status).json(userByEmail);
