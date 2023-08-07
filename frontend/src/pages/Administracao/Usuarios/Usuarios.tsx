@@ -2,16 +2,12 @@ import { useMemo, useState } from 'react';
 import UsuariosApi from '../../../api/UsuariosApi';
 import { Link, Navigate } from 'react-router-dom';
 import { Table, Thead, Tbody, Tfoot, Tr, Th, Td, TableCaption, TableContainer, useDisclosure } from '@chakra-ui/react';
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import { Authcontext } from '../../../Context/Context';
 import ModalRef from './../../../components/Modal/Modal';
 import AddUsuario from '../AddUsuario/AddUsuario';
 import { iUser } from '../../../interfaces/iUser';
 import AltertRef from '../../../components/Alert/Altert';
-import Botao from '../../../components/Botao/Botao';
-import { user } from './../../../../../backend/src/interfaces/user';
-import styles from './Usuarios.module.css'
-
 // type modalState = boolean;
 // type setModalState = React.Dispatch<React.SetStateAction<modalState>>;
 
@@ -82,19 +78,23 @@ const Usuarios = () => {
           </Table>
         </TableContainer>
       ) : (
+        <>
         <Navigate to={'/'} />
         <Navigate to={'/'} />
+        </>
 
         // <p>Usuário não logado no sistema</p>
       )}
-      <Link to={'/administracao'}>
+      
+      {/* <Link to={'/administracao'}> */}
       <Link to={'/administracao'}>
         <button>Voltar</button>
       </Link>
+      
 
-      <ModalRef titulo={'Cadastrar novo usuário'} isOp={isOpen} onCl={onClose}>
+      {/* <ModalRef titulo={'Cadastrar novo usuário'} isOp={isOpen} onCl={onClose}>
         <AddUsuario/>
-      </ModalRef>
+      </ModalRef> */}
     </div>
   );
 };

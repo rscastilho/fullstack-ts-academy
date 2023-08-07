@@ -4,7 +4,6 @@ import { FC } from 'react';
 // const { onOpen, isOpen, onClose } = useDisclosure();
 import { AlertDialog, AlertDialogBody, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogOverlay, Button, useDisclosure } from '@chakra-ui/react';
 import { useRef } from 'react';
-import { iUser } from '../../interfaces/iUser';
 import AddUsuario from '../../pages/Administracao/AddUsuario/AddUsuario';
 
 const ModalRef: FC<iModal> = ({ titulo, user }) => {
