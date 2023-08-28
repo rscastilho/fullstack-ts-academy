@@ -39,15 +39,17 @@ class userService {
     }
   }
 
-  async deleteUser(req: Request, res: Response): Promise<Response | Error> {
+  async deleteUser(req: Request, res: Response): Promise<Response | any> {
     //funcao deleta e restaura usuario
     try {
       const { id } = req.params;
       const pegarUserQuery = await _userRepository.userById(+id);
+      
       if (pegarUserQuery.status === 400) {
         return res.status(StatusCodes.BAD_REQUEST).json(pegarUserQuery);
       }
-      const deleted = !pegarUserQuery.data[0]['deleted'];
+      
+      const deleted = !pegarUserQuery.data['deleted'];
       const deletedAt: Date = new Date();
       if (!deleted) {
         const deleteUserQuery = await _userRepository.deleteUser(deleted, deletedAt, +id);
@@ -57,7 +59,8 @@ class userService {
         } else {
           return res.status(StatusCodes.BAD_REQUEST).json({ message: 'Erro ao restaurar usuário.' });
         }
-      } else {
+      } 
+      if (pegarUserQuery.status === 200) {
         const deleteUserQuery = await _userRepository.deleteUser(deleted, deletedAt, +id);
         const deleteUser: RowDataPacket[] = await connection().promise().query(deleteUserQuery.query, deleteUserQuery.fields);
         if (deleteUser[0]['affectedRows'] > 0) {
@@ -70,7 +73,7 @@ class userService {
       return res.json(error);
     }
   }
-
+  
   async restoreUser(req: Request, res: Response): Promise<Error | Response> {
     //funcao somente restaura usuario
     try {

@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Sistema gerenciamento de academia desenvolvido em TS - nodeJs - ReacJs - Mysql",
   "main": "index.js",
-  "scripts": {
+    "scripts": {
     "dev": "nodemon --exec ts-node ./src/index.ts",
     "start": "node dist/index.js",
     "build": "tsc"

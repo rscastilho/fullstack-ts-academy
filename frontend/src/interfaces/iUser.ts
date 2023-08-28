@@ -16,5 +16,6 @@ export interface iUser{
     dataInicio?: Date | undefined;
     planoId?: number | undefined;
     blocked?: boolean;
+    deleted?:boolean
 
 }

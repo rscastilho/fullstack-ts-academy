@@ -4,7 +4,8 @@ import appApi from './appApi';
 export const PresencaApi = async (data: iPresenca) => {
   try {
     const result = await appApi.post('/presenca', data);
-    return result.data;
+    console.log(result.data)
+    return result;
   } catch (error: any) {
     return error.response.data;
   }

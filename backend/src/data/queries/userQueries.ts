@@ -124,7 +124,7 @@ class userQueries {
     return { query, fields };
   }
   getAllUser() {
-    const query = `SELECT id, numeroMatricula, nomeCompleto, email, cpf, dataNascimento, telefone, avatar, cep, endereco, complemento, bairro, cidade, uf, blocked FROM user`;
+    const query = `SELECT id, numeroMatricula, nomeCompleto, email, cpf, dataNascimento, telefone, avatar, cep, endereco, complemento, bairro, cidade, uf, blocked, deleted FROM user`;
     return { query };
   }
 }

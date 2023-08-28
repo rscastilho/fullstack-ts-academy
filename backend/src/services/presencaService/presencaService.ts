@@ -21,9 +21,15 @@ class RegistrarService {
 
         if (registrarPresenca[0].affectedRows > 0) {
           return res.status(StatusCodes.OK).json({ message: `Seja bem vindo. Bom treino!` });
+        } else {
+          // return res.status(pegarNumeroMatriculaQuery.status).json(pegarNumeroMatriculaQuery);
+          return res.status(StatusCodes.BAD_REQUEST).json({ message: 'Usuário não registrado no sistema' });
         }
-      } else {
-        return res.status(pegarNumeroMatriculaQuery.status).json(pegarNumeroMatriculaQuery);
+      } else
+
+      if (pegarNumeroMatriculaQuery.status !== 200) {
+        console.log('456');
+        return res.status(StatusCodes.BAD_REQUEST).json({ message: 'Usuário não registrado no sistema' });
       }
     } catch (error: any) {
       return error;

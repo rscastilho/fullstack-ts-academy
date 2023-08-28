@@ -15,7 +15,7 @@ class tokenJwt {
     try {
       const pegarPerfilQuery = _perfilQueries.pegarPerfil(id)
       const pegarPerfil: RowDataPacket[] = await connection().promise().query(pegarPerfilQuery.query, pegarPerfilQuery.fields)
-      return jwt.sign({ id, email, perfil: pegarPerfil[0][0].perfil }, jwtSecret, { expiresIn: '600s' });
+      return jwt.sign({ id, email, perfil: pegarPerfil[0][0].perfil }, jwtSecret, { expiresIn: '1000s' });
     } catch (error) {
       console.log('erro token jwt', error);
       return error;
